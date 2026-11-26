@@ -1,0 +1,74 @@
+{
+  "edicao": 1,
+  "data": "2026-11-26",
+  "horario": "20:00",
+  "modelo_teste": "D. Pergunta que coça",
+  "editoria": "IA · MERCADO",
+  "fonte": "TechCrunch",
+  "fonte_url": "https://techcrunch.com/2026/11/24/anthropic-shares-fall-below-ipo-price-a-worrying-sign-for-ai-startups/",
+  "fotos": [
+    {
+      "pagina": "https://techcrunch.com/2026/11/24/anthropic-shares-fall-below-ipo-price-a-worrying-sign-for-ai-startups/",
+      "credito": "Charly Triballeau/AFP/Getty Images",
+      "url": "https://techcrunch.com/wp-content/uploads/2026/11/GettyImages-2305298275.jpg",
+      "arquivo": "08/foto-1.webp"
+    }
+  ],
+  "capa": {
+    "modelo": "pergunta",
+    "manchete": "A ação da Anthropic estreou a US$ 111. *Quanto valia 5 dias depois?*",
+    "foto": 1,
+    "posicao": "center 30%"
+  },
+  "slides": [
+    {
+      "tipo": "noticia",
+      "kicker": "A resposta",
+      "foto": 1,
+      "posicao": "center 30%",
+      "dado": {
+        "numero": "US$ 76",
+        "rotulo": "mínima de 24/11, abaixo do IPO"
+      },
+      "texto": "Na terça (24/11), a ação chegou a *US$ 76*, queda de quase 12% sobre o dia anterior e abaixo dos US$ 83 do IPO. Na estreia, em 19/11, ela abriu a US$ 111,50 na Nasdaq."
+    },
+    {
+      "tipo": "barras",
+      "titulo": "Da estreia ao *tombo*",
+      "fonte": "TechCrunch e Fortune",
+      "itens": [
+        {
+          "nome": "Abertura em 19/11",
+          "valor": 111.5,
+          "texto": "US$ 111,50"
+        },
+        {
+          "nome": "Preço do IPO",
+          "valor": 83,
+          "texto": "US$ 83"
+        },
+        {
+          "nome": "Mínima em 24/11",
+          "valor": 76,
+          "texto": "US$ 76",
+          "destaque": true
+        }
+      ],
+      "nota": "No preço do IPO, os 5.300 funcionários tinham cerca de *US$ 232 bilhões* em ações. Mas, por enquanto, só podem vender 10%."
+    },
+    {
+      "tipo": "importa",
+      "foto": 1,
+      "posicao": "center 30%",
+      "texto": "IPO não é linha de chegada. Se até a Anthropic cai mais de 30% desde a abertura em cinco dias, *startup de IA vai ser cobrada por resultado*, não por promessa. Quem capta em 2027 vai ouvir mais sobre margem.",
+      "pergunta": "Você compraria ação da Anthropic agora?"
+    }
+  ],
+  "legenda": "A ação da Anthropic estreou a US$ 111. Quanto valia 5 dias depois?\n\nNa terça (24/11), a ação da Anthropic chegou a US$ 76 por volta do meio-dia, queda de quase 12% em relação ao fechamento do dia anterior. Ficou abaixo dos US$ 83 do preço do IPO.\n\nContexto: a Anthropic estreou na Nasdaq em 19/11, com a ação abrindo a US$ 111,50. O IPO levantou cerca de US$ 81 bilhões e avaliou a empresa em US$ 1,5 trilhão.\n\nOlha o detalhe: no preço do IPO, os cerca de 5.300 funcionários somavam algo como US$ 232 bilhões em ações. Mas quem não é fundador só pode vender até 10% agora, e mais 35% depois da divulgação do resultado de 2026. Riqueza de papel oscila junto com a ação.\n\nO que fazer: se você tem startup de IA e pensa em captar, prepare números de receita e margem. O mercado está menos disposto a pagar só pela história.\n\nVocê compraria ação da Anthropic agora? Comenta aí.\n\nFonte: TechCrunch (24/11/2026) e Fortune (19/11/2026)\nFoto: Charly Triballeau/AFP/Getty Images\n\n#anthropic #claude #ipo #bolsa #ia #startups #mercado #investimentos #tecnologia #inteligenciaartificial",
+  "checagem": {
+    "verdadeira": "TechCrunch 24/11/2026 (https://techcrunch.com/2026/11/24/anthropic-shares-fall-below-ipo-price-a-worrying-sign-for-ai-startups/): mínima de US$ 76, queda de quase 12%, IPO a US$ 83, abertura a US$ 111,50. Fortune 19/11/2026 (https://fortune.com/2026/11/19/anthropic-ipo-millionaire-employees-billionaire-early-hires-wealth-concentration-warning-dario-amodei/) e NeoFeed 19/11/2026: US$ 81 bi levantados, US$ 1,5 tri, 5.300 funcionários, ~US$ 232 bi em ações, venda de até 10% no primeiro dia e mais 35% após o resultado de 2026.",
+    "numero_central_conferido": true,
+    "relevancia": 8
+  },
+  "versao_modelo": 3
+}

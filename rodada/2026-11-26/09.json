@@ -1,0 +1,59 @@
+{
+  "edicao": 1,
+  "data": "2026-11-26",
+  "horario": "21:30",
+  "modelo_teste": "B. A IA (ou o CEO) disse",
+  "editoria": "IA · DEBATE",
+  "fonte": "TechCrunch",
+  "fonte_url": "https://techcrunch.com/2026/11/25/anthropics-dario-amodei-calls-accusations-of-surrendering-human-control-to-ai-absurd/",
+  "fotos": [
+    {
+      "pagina": "https://techcrunch.com/2026/11/25/anthropics-dario-amodei-calls-accusations-of-surrendering-human-control-to-ai-absurd/",
+      "credito": "Benjamin Girette/Bloomberg/Getty Images",
+      "url": "https://techcrunch.com/wp-content/uploads/2026/03/Dario-Amodei-Anthropic-viva-tech.jpg",
+      "arquivo": "09/foto-1.webp"
+    }
+  ],
+  "capa": {
+    "modelo": "citacao",
+    "manchete": "Nunca devemos sacrificar a legitimidade *no altar da eficiência*",
+    "autor": "Dario Amodei, CEO da Anthropic, no X",
+    "foto": 1,
+    "posicao": "center 25%"
+  },
+  "slides": [
+    {
+      "tipo": "prova",
+      "kicker": "O que ele escreveu",
+      "origem": "Dario Amodei, no X",
+      "endereco": "x.com/DarioAmodei",
+      "data": "25 nov 2026",
+      "original": "\"We should never sacrifice legitimacy or self-determination at the altar of efficiency or security.\" (...) \"we don't expect it to be safe for Claude to build successive frontier models *fully autonomously*.\"",
+      "traducao": "Ele também disse que não espera que seja seguro o Claude construir os próximos modelos de ponta *de forma totalmente autônoma*."
+    },
+    {
+      "tipo": "noticia",
+      "foto": 1,
+      "posicao": "center 25%",
+      "dado": {
+        "numero": "80%+",
+        "rotulo": "do código da Anthropic já é do Claude"
+      },
+      "texto": "Amodei respondeu à acusação de que a Anthropic quer entregar o livre-arbítrio humano à IA e chamou a ideia de *absurda*. Ele defende que humanos tenham a palavra final e quer limite para a IA que melhora a si mesma."
+    },
+    {
+      "tipo": "importa",
+      "foto": 1,
+      "posicao": "center 25%",
+      "texto": "Quem usa agente de IA no trabalho vive esse dilema em miniatura: *quanto deixar no automático*. Revisão humana nos pontos críticos (deploy, dinheiro, dado de cliente) segue sendo a regra que evita desastre.",
+      "pergunta": "Até onde você deixa a IA decidir sozinha?"
+    }
+  ],
+  "legenda": "\"Nunca devemos sacrificar a legitimidade no altar da eficiência\"\n\nDario Amodei, CEO da Anthropic, chamou de \"absurda\" a acusação de que a empresa defende entregar o livre-arbítrio humano à IA. A resposta veio num post longo no X, em 25/11.\n\nContexto: Amodei diz que sempre defendeu supervisão democrática da IA e que humanos devem ter a palavra final. Ele separa isso de automatizar tarefas específicas, como dirigir um carro ou escrever software de ponta a ponta, e sugere traçar um limite na IA que melhora a si mesma (o que ele chama de autoaperfeiçoamento recursivo).\n\nOlha o detalhe: a própria Anthropic disse em junho que o Claude já escreve mais de 80% do código que entra na base da empresa. E Amodei escreveu que não espera que seja seguro o Claude construir os próximos modelos de ponta de forma totalmente autônoma.\n\nO que fazer: se você usa agentes de IA, defina onde a revisão humana é obrigatória. Deploy, pagamento e dado de cliente são bons pontos para começar.\n\nAté onde você deixa a IA decidir sozinha? Comenta aí.\n\nFonte: TechCrunch (25/11/2026), com o post de Dario Amodei no X\nFoto: Benjamin Girette/Bloomberg/Getty Images\n\n#anthropic #claude #darioamodei #ia #agentesdeia #segurancadeia #tecnologia #dev #startups #inteligenciaartificial",
+  "checagem": {
+    "verdadeira": "TechCrunch 25/11/2026 (https://techcrunch.com/2026/11/25/anthropics-dario-amodei-calls-accusations-of-surrendering-human-control-to-ai-absurd/), com citações do post de Dario Amodei no X (https://x.com/DarioAmodei/status/2125656399392690605). Citação da capa traduzida do original \"We should never sacrifice legitimacy or self-determination at the altar of efficiency or security\". 80%: Anthropic em junho, citado pelo TechCrunch.",
+    "numero_central_conferido": true,
+    "relevancia": 7
+  },
+  "versao_modelo": 3
+}

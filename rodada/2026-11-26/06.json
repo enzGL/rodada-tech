@@ -1,0 +1,99 @@
+{
+  "edicao": 1,
+  "data": "2026-11-26",
+  "horario": "15:00",
+  "modelo_teste": "C. Duelo de números",
+  "editoria": "MERCADO · BIG TECH",
+  "fonte": "CompaniesMarketCap",
+  "fonte_url": "https://companiesmarketcap.com/",
+  "fotos": [
+    {
+      "commons": "File:Apple Park aerial view, June 2024.jpg",
+      "credito": "Nils Huenerfuerst/Wikimedia Commons (CC0)",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5b/Apple_Park_aerial_view%2C_June_2024.jpg/1920px-Apple_Park_aerial_view%2C_June_2024.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "arquivo": "06/foto-1.jpg"
+    },
+    {
+      "commons": "File:NVIDIA Headquarters.jpg",
+      "credito": "Coolcaesar/Wikimedia Commons (CC BY-SA 4.0)",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0f/NVIDIA_Headquarters.jpg/1920px-NVIDIA_Headquarters.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "arquivo": "06/foto-2.jpg"
+    }
+  ],
+  "capa": {
+    "modelo": "duelo",
+    "manchete": "Apple vale *US$ 1,5 tri a mais* que a Nvidia",
+    "lados": [
+      {
+        "foto": 1,
+        "nome": "Apple",
+        "numero": "5,17 tri",
+        "posicao": "center",
+        "cor": "#FF5A1F"
+      },
+      {
+        "foto": 2,
+        "nome": "Nvidia",
+        "numero": "3,61 tri",
+        "posicao": "center",
+        "cor": "#8A877E"
+      }
+    ],
+    "rotulo": "Valor de mercado em dólares, fechamento de 25/11/2026"
+  },
+  "slides": [
+    {
+      "tipo": "barras",
+      "titulo": "Quem vale *mais* no mundo hoje",
+      "fonte": "CompaniesMarketCap",
+      "itens": [
+        {
+          "nome": "Apple",
+          "valor": 5.167,
+          "texto": "US$ 5,17 tri",
+          "destaque": true
+        },
+        {
+          "nome": "Microsoft",
+          "valor": 3.638,
+          "texto": "US$ 3,64 tri"
+        },
+        {
+          "nome": "Nvidia",
+          "valor": 3.605,
+          "texto": "US$ 3,61 tri"
+        },
+        {
+          "nome": "Alphabet",
+          "valor": 3.331,
+          "texto": "US$ 3,33 tri"
+        }
+      ],
+      "nota": "Fechamento de 25/11. A Nvidia, que já foi a maior, está em *3º lugar*, atrás da Microsoft."
+    },
+    {
+      "tipo": "noticia",
+      "foto": 2,
+      "posicao": "center 40%",
+      "dado": {
+        "numero": "-22%",
+        "rotulo": "Nvidia em 2026 (Apple: +29%)"
+      },
+      "texto": "No ano, a Apple sobe 29% e a Nvidia cai 22%, segundo o CompaniesMarketCap. Só em 25/11 a Nvidia recuou 3,9%, no dia em que a S&P disse avaliar *rebaixar a nota de crédito* da empresa de AA para AA-."
+    },
+    {
+      "tipo": "importa",
+      "foto": 1,
+      "posicao": "center",
+      "texto": "Quando a Nvidia balança, o mercado inteiro de IA revê preço e prazo. Para quem capta dinheiro, o recado é claro: *receita previsível pesa mais que hype* na hora de negociar com investidor.",
+      "pergunta": "Quem lidera em 2027: Apple ou Nvidia?"
+    }
+  ],
+  "legenda": "A Apple vale US$ 1,5 trilhão a mais que a Nvidia\n\nNo fechamento de 25/11, a Apple valia US$ 5,17 trilhões em bolsa e a Nvidia, US$ 3,61 trilhões, segundo o CompaniesMarketCap. A diferença passa de US$ 1,5 trilhão.\n\nContexto: no ano, a ação da Apple sobe cerca de 29% e a da Nvidia cai cerca de 22%. Com isso, a Nvidia caiu para o 3º lugar entre as empresas mais valiosas do mundo, atrás da Microsoft (US$ 3,64 trilhões).\n\nOlha o detalhe: só em 25/11 a Nvidia recuou 3,9%. No mesmo dia, a S&P informou que avalia rebaixar a nota de crédito da empresa de AA para AA-, citando risco de governança depois da saída e da volta de Jensen Huang como CEO.\n\nO que fazer: se você constrói em cima de IA, acompanhe esse humor do mercado. Ele mexe em preço de GPU, rodada de investimento e apetite por startup de IA.\n\nQuem lidera em 2027: Apple ou Nvidia? Comenta aí.\n\nFonte: CompaniesMarketCap (valores de 25/11/2026) e TechCrunch\nFoto: Nils Huenerfuerst/Wikimedia Commons (CC0); Coolcaesar/Wikimedia Commons (CC BY-SA 4.0)\n\n#apple #nvidia #bolsa #mercado #bigtech #ia #tecnologia #startups #investimentos #inteligenciaartificial",
+  "checagem": {
+    "verdadeira": "CompaniesMarketCap, valores de 25/11/2026 (https://companiesmarketcap.com/): Apple US$ 5,167 tri, Microsoft 3,638, Nvidia 3,605, Alphabet 3,331; YTD Apple +29,28%, Nvidia -22,28%; Nvidia -3,91% no dia. Nasdaq confirma Apple 5,167 e Nvidia 3,598 no mesmo dia. S&P: TechCrunch 25/11/2026 (https://techcrunch.com/2026/11/25/sp-considers-nvidia-credit-downgrade-over-governance-and-key-man-risks/).",
+    "numero_central_conferido": true,
+    "relevancia": 7
+  },
+  "versao_modelo": 3
+}

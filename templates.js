@@ -109,11 +109,141 @@ ${s.pergunta ? `<div style="margin-top:auto;border-top:3px solid #FF5A1F;padding
 <span>FONTE: ${up(post.fonte)}</span><span style="color:#F3F1EA;font-weight:700">SEGUE @RODADA.TECH</span></div></div>${foot}`;
 }
 
+// ---------------------------------------------------------------------------
+// Modelos de teste A a E (2026-11-26), a partir das páginas que viralizam
+// (ver vault: conteudo/inspiracoes/empresa/rodada-tech/2026-11-26-virais/README.md).
+//   capa.modelo: "foto" (padrão; A e E, aceita capa.selo), "citacao" (B), "duelo" (C), "pergunta" (D)
+//   slides extras: { tipo: "prova" } (trecho real da fonte) e { tipo: "barras" } (gráfico simples)
+// ---------------------------------------------------------------------------
+
+// Selo redondo sobre a foto (o "assunto" da notícia: número, tema ou "?").
+function selo(txt, grande = false) {
+  const d = grande ? 230 : 200;
+  const n = semMarca(txt).length;
+  const fs = grande ? 170 : n <= 3 ? 74 : n <= 6 ? 52 : n <= 9 ? 40 : 32;
+  return `<div style="position:absolute;right:${M}px;top:150px;width:${d}px;height:${d}px;border-radius:50%;background:#0E0E0C;border:10px solid #FF5A1F;display:flex;align-items:center;justify-content:center;text-align:center;padding:18px;transform:rotate(-8deg);box-shadow:0 18px 40px rgba(0,0,0,.35)">
+<span style="${ARCH};font-weight:900;font-stretch:75%;font-size:${fs}px;line-height:.92;color:#F3F1EA;text-transform:uppercase">${marca(txt, 'color:#FF5A1F')}</span></div>`;
+}
+
+const topo = (post) => `<div style="position:absolute;left:${M}px;right:${M}px;top:${M - 8}px;display:flex;justify-content:space-between;align-items:center">
+${logo('#F3F1EA', '#F3F1EA')}<span style="${MONO};font-weight:500;font-size:20px;letter-spacing:.12em;color:#F3F1EA">${esc(dataCurta(post))}</span></div>`;
+
+const rodapeCapa = (credito, acao = 'ARRASTA →') => `<div style="display:flex;justify-content:space-between;align-items:center;gap:24px;border-top:2px solid rgba(243,241,234,.22);padding-top:22px;${MONO};font-size:17px;letter-spacing:.08em;color:#A8A59B">
+<span>${credito}</span><span style="flex:none;color:#F3F1EA;font-weight:700">${acao}</span></div>`;
+
+const fundoFoto = (f, posicao) => `<img src="${f.src}" style="position:absolute;inset:0;width:${W}px;height:${H}px;object-fit:cover;object-position:${esc(posicao || 'center')}">
+<div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(14,14,12,.55) 0%,rgba(14,14,12,0) 16%,rgba(14,14,12,0) 32%,rgba(14,14,12,.8) 54%,rgba(14,14,12,.97) 72%,#0E0E0C 100%)"></div>`;
+
+// A, E (selo) e D (pergunta): foto em tela cheia + manchete.
+function capaFoto(post) {
+  const c = post.capa;
+  if (!c.selo && c.modelo !== 'pergunta') return capa(post);
+  const f = foto(post, c.foto || 1);
+  const h = fit(c.manchete, [[40, 118], [55, 104], [70, 92], [90, 82], [999, 72]]);
+  const pergunta = c.modelo === 'pergunta';
+  return `${head}<div data-slide style="width:${W}px;height:${H}px;position:relative;overflow:hidden;background:#0E0E0C;color:#F3F1EA;font-family:Inter,sans-serif">
+${fundoFoto(f, c.posicao)}${topo(post)}${selo(pergunta ? '?' : c.selo, pergunta)}
+<div style="position:absolute;left:${M}px;right:${M}px;bottom:${M}px;display:flex;flex-direction:column;gap:26px" data-capa>
+${kicker(post.editoria, '#FF5A1F', '#0E0E0C')}
+<h1 style="margin:0;${ARCH};font-weight:900;font-stretch:75%;font-size:${h}px;line-height:.94;letter-spacing:-.005em;text-transform:uppercase">${marca(c.manchete, 'color:#FF5A1F')}</h1>
+${rodapeCapa(`FOTO: ${up(f.credito || 'Divulgação')}`, pergunta ? 'ARRASTA PRA VER A RESPOSTA →' : 'ARRASTA →')}</div></div>${foot}`;
+}
+
+// B: a citação é a manchete. capa.manchete = frase (sem aspas), capa.autor = "Nome, cargo".
+function capaCitacao(post) {
+  const c = post.capa;
+  const f = foto(post, c.foto || 1);
+  const h = fit(c.manchete, [[40, 112], [55, 98], [70, 88], [90, 78], [999, 68]]);
+  return `${head}<div data-slide style="width:${W}px;height:${H}px;position:relative;overflow:hidden;background:#0E0E0C;color:#F3F1EA;font-family:Inter,sans-serif">
+${fundoFoto(f, c.posicao)}${topo(post)}
+<div style="position:absolute;left:${M}px;right:${M}px;bottom:${M}px;display:flex;flex-direction:column;gap:22px" data-capa>
+${kicker(post.editoria, '#FF5A1F', '#0E0E0C')}
+<h1 style="margin:0;${ARCH};font-weight:900;font-stretch:75%;font-size:${h}px;line-height:.94;letter-spacing:-.005em;text-transform:uppercase"><span style="color:#FF5A1F">“</span>${marca(c.manchete, 'color:#FF5A1F')}<span style="color:#FF5A1F">”</span></h1>
+<span style="${MONO};font-weight:700;font-size:22px;letter-spacing:.1em;color:#FF5A1F">${up(c.autor || '')}</span>
+${rodapeCapa(`FOTO: ${up(f.credito || 'Divulgação')}`)}</div></div>${foot}`;
+}
+
+// C: dois lados, dois números. capa.lados = [{ foto, posicao, nome, numero }, {...}], capa.rotulo.
+function capaDuelo(post) {
+  const c = post.capa;
+  const lados = (c.lados || []).slice(0, 2);
+  if (lados.length < 2) throw new Error('capa.modelo "duelo" precisa de 2 itens em capa.lados.');
+  const fs = lados.map((l) => foto(post, l.foto));
+  const h = fit(c.manchete, [[40, 84], [60, 74], [80, 66], [999, 58]]);
+  const lado = (l, f, cor) => `<div style="display:flex;flex-direction:column;align-items:center;gap:22px;width:440px">
+<div style="width:400px;height:400px;border-radius:50%;overflow:hidden;border:10px solid ${cor};background:#222">
+<img src="${f.src}" style="width:100%;height:100%;object-fit:cover;object-position:${esc(l.posicao || 'center')}"></div>
+<span style="background:${cor};color:#0E0E0C;${MONO};font-weight:700;font-size:26px;letter-spacing:.12em;padding:10px 18px 9px">${up(l.nome)}</span>
+<span style="${ARCH};font-weight:900;font-stretch:75%;font-size:${fit(l.numero, [[5, 150], [7, 124], [9, 104], [999, 88]])}px;line-height:.9;color:#F3F1EA">${esc(l.numero)}</span></div>`;
+  const creditos = [...new Set(fs.map((f) => f.credito || 'Divulgação'))].join(' · ');
+  return `${head}<div data-slide style="width:${W}px;height:${H}px;position:relative;overflow:hidden;background:radial-gradient(120% 80% at 50% 38%,#24221E 0%,#0E0E0C 70%);color:#F3F1EA;font-family:Inter,sans-serif">
+${topo(post)}
+<div style="position:absolute;left:${M}px;right:${M}px;top:168px;display:flex;flex-direction:column;gap:20px">
+${kicker(post.editoria, '#FF5A1F', '#0E0E0C')}
+<h1 style="margin:0;${ARCH};font-weight:900;font-stretch:75%;font-size:${h}px;line-height:.95;text-transform:uppercase">${marca(c.manchete, 'color:#FF5A1F')}</h1></div>
+<div style="position:absolute;left:${M - 20}px;right:${M - 20}px;top:460px;display:flex;justify-content:space-between">
+${lado(lados[0], fs[0], lados[0].cor || '#FF5A1F')}${lado(lados[1], fs[1], lados[1].cor || '#8A877E')}</div>
+<span style="position:absolute;left:50%;top:605px;transform:translateX(-50%);${ARCH};font-weight:900;font-size:54px;color:#0E0E0C;background:#F3F1EA;border-radius:50%;width:110px;height:110px;display:flex;align-items:center;justify-content:center">X</span>
+<div style="position:absolute;left:${M}px;right:${M}px;bottom:${M}px;display:flex;flex-direction:column;gap:22px">
+<span style="text-align:center;${MONO};font-weight:700;font-size:22px;letter-spacing:.14em;color:#A8A59B">${up(c.rotulo || '')}</span>
+${rodapeCapa(`FOTOS: ${up(creditos)}`)}</div></div>${foot}`;
+}
+
+// A prova: trecho real da fonte (original em inglês + tradução). Nunca inventar print.
+// { tipo: "prova", origem, endereco, data, titulo, original, traducao, kicker }
+function prova(post, s, i, total) {
+  const tam = fit(s.traducao || '', [[140, 40], [200, 37], [260, 34], [999, 31]]);
+  const f = s.foto === 0 ? null : foto(post, s.foto || 1);
+  const FH = 380; // faixa de foto embaixo
+  const faixa = f
+    ? `<img src="${f.src}" style="position:absolute;left:0;bottom:0;width:${W}px;height:${FH}px;object-fit:cover;object-position:${esc(s.posicao || 'center 30%')}">
+<div style="position:absolute;left:0;bottom:0;width:${W}px;height:${FH}px;background:linear-gradient(180deg,#F3F1EA 0%,rgba(243,241,234,0) 28%,rgba(14,14,12,0) 60%,rgba(14,14,12,.85) 100%)"></div>
+<span style="position:absolute;right:${M}px;bottom:${M + 40}px;color:#E7E4DA;${MONO};font-size:14px;letter-spacing:.06em">FOTO: ${up(f.credito || 'Divulgação')}</span>`
+    : '';
+  return `${head}<div data-slide style="width:${W}px;height:${H}px;position:relative;overflow:hidden;background:#F3F1EA;color:#0E0E0C;font-family:Inter,sans-serif">
+${faixa}
+<div style="position:absolute;left:${M}px;right:${M}px;top:${M}px;bottom:${f ? FH - 20 : M + 56}px;display:flex;flex-direction:column;gap:30px" data-box>
+<span style="${MONO};font-weight:700;font-size:20px;letter-spacing:.16em;color:#C2410C">${up(s.kicker || 'A prova')}</span>
+<div style="background:#FFFFFF;border:3px solid #0E0E0C;box-shadow:14px 14px 0 #FF5A1F;padding:40px 44px;display:flex;flex-direction:column;gap:22px">
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:20px;border-bottom:2px solid #E4E1D8;padding-bottom:18px">
+<span style="font-weight:700;font-size:28px">${esc(s.origem || post.fonte)}</span>
+<span style="${MONO};font-size:18px;letter-spacing:.06em;color:#5C5A52">${esc(s.endereco || '')}${s.data ? ' · ' + up(s.data) : ''}</span></div>
+${s.titulo ? `<span style="${ARCH};font-weight:800;font-size:38px;line-height:1.1">${esc(s.titulo)}</span>` : ''}
+<p style="margin:0;font-size:31px;line-height:1.4;color:#33322D;font-style:italic">${marca(s.original, 'font-style:normal;font-weight:700;color:#0E0E0C;background:linear-gradient(180deg,transparent 58%,rgba(255,90,31,.38) 58%)')}</p></div>
+${s.traducao ? `<div style="display:flex;flex-direction:column;gap:14px"><span style="${MONO};font-weight:700;font-size:18px;letter-spacing:.14em;color:#8A877E">EM PORTUGUÊS</span>
+<p style="margin:0;font-size:${tam}px;line-height:1.38">${marca(s.traducao, 'font-weight:700;color:#C2410C')}</p></div>` : ''}</div>
+<div style="position:absolute;left:${M}px;right:${M}px;bottom:${M - 8}px;display:flex;justify-content:space-between;${MONO};font-size:17px;letter-spacing:.08em;color:${f ? '#E7E4DA' : '#5C5A52'}">
+<span>FONTE: ${up(s.origem || post.fonte)}</span><span>${i}/${total}</span></div></div>${foot}`;
+}
+
+// Gráfico de barras horizontal. { tipo: "barras", titulo, itens: [{ nome, valor, texto, destaque }], nota }
+function barras(post, s, i, total) {
+  const itens = s.itens || [];
+  const max = Math.max(...itens.map((x) => Math.abs(x.valor)));
+  const linha = (x) => `<div style="display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;justify-content:space-between;align-items:baseline">
+<span style="${MONO};font-weight:700;font-size:24px;letter-spacing:.1em">${up(x.nome)}</span>
+<span style="${ARCH};font-weight:900;font-stretch:80%;font-size:${itens.length > 3 ? 64 : 80}px;line-height:1;color:${x.destaque ? '#C2410C' : '#0E0E0C'}">${esc(x.texto)}</span></div>
+<div style="height:${itens.length > 3 ? 64 : 88}px;background:#E4E1D8"><div style="height:100%;width:${Math.max(4, (Math.abs(x.valor) / max) * 100).toFixed(1)}%;background:${x.destaque ? '#FF5A1F' : '#0E0E0C'}"></div></div></div>`;
+  return `${head}<div data-slide style="width:${W}px;height:${H}px;position:relative;overflow:hidden;background:#F3F1EA;color:#0E0E0C;font-family:Inter,sans-serif">
+<div style="position:absolute;left:${M}px;right:${M}px;top:${M}px;bottom:${M + 56}px;display:flex;flex-direction:column;gap:40px" data-box>
+<span style="${MONO};font-weight:700;font-size:20px;letter-spacing:.16em;color:#C2410C">${up(s.kicker || 'Os números')}</span>
+<h2 style="margin:0;${ARCH};font-weight:900;font-stretch:75%;font-size:${fit(s.titulo, [[40, 88], [60, 76], [999, 66]])}px;line-height:.95;text-transform:uppercase">${marca(s.titulo, 'color:#C2410C')}</h2>
+<div style="display:flex;flex-direction:column;gap:${itens.length > 3 ? 44 : 60}px;margin:auto 0">${itens.map(linha).join('')}</div>
+${s.nota ? `<p style="margin:0;border-top:3px solid #0E0E0C;padding-top:28px;font-size:34px;line-height:1.38;color:#33322D">${marca(s.nota, 'font-weight:700;color:#C2410C')}</p>` : ''}</div>
+<div style="position:absolute;left:${M}px;right:${M}px;bottom:${M - 8}px;display:flex;justify-content:space-between;${MONO};font-size:17px;letter-spacing:.08em;color:#5C5A52">
+<span>FONTE: ${up(s.fonte || post.fonte)}</span><span>${i}/${total}</span></div></div>${foot}`;
+}
+
+const CAPAS = { foto: capaFoto, pergunta: capaFoto, citacao: capaCitacao, duelo: capaDuelo };
+const MIOLO = { noticia, importa, prova, barras };
+
 function slides(post) {
   const miolo = post.slides || [];
   if (!miolo.length) throw new Error('Post sem "slides" (formato v2).');
   const total = miolo.length + 1;
-  return [capa(post), ...miolo.map((s, k) => (s.tipo === 'importa' ? importa : noticia)(post, s, k + 2, total))];
+  const fazCapa = CAPAS[(post.capa && post.capa.modelo) || 'foto'] || capaFoto;
+  return [fazCapa(post), ...miolo.map((s, k) => (MIOLO[s.tipo] || noticia)(post, s, k + 2, total))];
 }
 
-module.exports = { slides, capa, noticia, importa };
+module.exports = { slides, capa, noticia, importa, prova, barras, capaCitacao, capaDuelo };

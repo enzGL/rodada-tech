@@ -1,0 +1,65 @@
+{
+  "edicao": 1,
+  "data": "2026-11-26",
+  "horario": "13:30",
+  "modelo_teste": "E. Famoso + fato inusitado",
+  "editoria": "BIG TECH · NVIDIA",
+  "fonte": "NVIDIA Newsroom",
+  "fonte_url": "https://nvidianews.nvidia.com/news/nvidia-board-reinstates-jensen-huang-as-president-ceo-and-board-director",
+  "fotos": [
+    {
+      "pagina": "https://techcrunch.com/2026/11/25/sp-considers-nvidia-credit-downgrade-over-governance-and-key-man-risks/",
+      "credito": "Fabrice Coffrini/AFP/Getty Images",
+      "url": "https://techcrunch.com/wp-content/uploads/2026/01/GettyImages-2256813240.jpg?resize=1200,800",
+      "arquivo": "05/foto-1.webp"
+    },
+    {
+      "commons": "File:Jensen Huang - Nvidia Keynote - CES 2025 Las Vegas (1).jpg",
+      "credito": "Pronoia/Wikimedia Commons (CC0)",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/02/Jensen_Huang_-_Nvidia_Keynote_-_CES_2025_Las_Vegas_%281%29.jpg/1920px-Jensen_Huang_-_Nvidia_Keynote_-_CES_2025_Las_Vegas_%281%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "arquivo": "05/foto-2.jpg"
+    }
+  ],
+  "capa": {
+    "manchete": "Jensen Huang saiu da Nvidia e *voltou 11 dias depois*",
+    "selo": "11 dias",
+    "foto": 1,
+    "posicao": "center 25%"
+  },
+  "slides": [
+    {
+      "tipo": "prova",
+      "kicker": "O comunicado",
+      "origem": "NVIDIA Newsroom",
+      "endereco": "nvidianews.nvidia.com",
+      "data": "23 nov 2026",
+      "titulo": "NVIDIA Board Reinstates Jensen Huang as President, CEO and Board Director",
+      "original": "\"The Board of Directors voted *unanimously to reinstate* Mr. Huang following a series of discussions and meetings with Mr. Huang.\"",
+      "traducao": "O conselho votou *por unanimidade* pela volta de Huang como CEO, com efeito imediato, depois de uma série de conversas e reuniões com ele."
+    },
+    {
+      "tipo": "noticia",
+      "foto": 2,
+      "posicao": "center 30%",
+      "dado": {
+        "numero": "+30%",
+        "rotulo": "ação da Nvidia no dia da volta"
+      },
+      "texto": "Huang renunciou em 11/11, durante uma investigação interna sobre sua conduta, e a CFO Colette Kress virou CEO interina. Em 23/11, o conselho o reconduziu. A ação subiu *mais de 30%* no dia e caiu mais de 7% no seguinte."
+    },
+    {
+      "tipo": "importa",
+      "foto": 1,
+      "posicao": "center 25%",
+      "texto": "A S&P já avalia rebaixar a nota de crédito da Nvidia por *depender demais de uma pessoa só* (o risco \"key man\"). Para founder, a lição é velha: empresa que só anda com o fundador vale menos do que parece.",
+      "pergunta": "Empresa pode depender de uma pessoa só?"
+    }
+  ],
+  "legenda": "Jensen Huang saiu da Nvidia e voltou 11 dias depois\n\nO conselho da Nvidia reconduziu Jensen Huang como presidente e CEO em 23/11, com efeito imediato. A votação foi unânime, segundo o comunicado oficial da empresa.\n\nContexto: Huang renunciou em 11/11, durante uma investigação interna sobre sua conduta pessoal, e a CFO Colette Kress assumiu como CEO interina. A investigação do comitê do conselho continua até o fim, e a Nvidia vai criar o cargo de Chief Compliance Officer.\n\nOlha o detalhe: a ação subiu mais de 30% no dia da volta e caiu mais de 7% no dia seguinte. E a S&P abriu uma revisão para talvez rebaixar a nota de crédito da Nvidia de AA para AA-, citando supervisão fraca e falta de plano de sucessão.\n\nO que fazer: se a sua empresa só funciona com você, comece a documentar processos e formar quem decide no seu lugar. Investidor e banco olham isso.\n\nEmpresa pode depender de uma pessoa só? Comenta aí.\n\nFonte: NVIDIA Newsroom (comunicado de 23/11/2026) e TechCrunch\nFoto: Fabrice Coffrini/AFP/Getty Images; Pronoia/Wikimedia Commons (CC0)\n\n#nvidia #jensenhuang #bigtech #startups #founder #tecnologia #mercado #ia #inteligenciaartificial #governanca",
+  "checagem": {
+    "verdadeira": "Comunicado oficial: https://nvidianews.nvidia.com/news/nvidia-board-reinstates-jensen-huang-as-president-ceo-and-board-director (23/11/2026, voto unânime). Renúncia: comunicado de 12/11/2026 (https://nvidianews.nvidia.com/news/nvidia-announces-ceo-transition). Alta de mais de 30% e queda de mais de 7%: TechCrunch 24/11/2026 (https://techcrunch.com/2026/11/24/anthropic-shares-fall-below-ipo-price-a-worrying-sign-for-ai-startups/). S&P: TechCrunch 25/11/2026 (https://techcrunch.com/2026/11/25/sp-considers-nvidia-credit-downgrade-over-governance-and-key-man-risks/).",
+    "numero_central_conferido": true,
+    "relevancia": 8
+  },
+  "versao_modelo": 3
+}
