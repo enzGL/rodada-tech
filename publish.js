@@ -101,6 +101,10 @@ async function publicar(jsonRel, { teste = false } = {}) {
   const imgs = fs.readdirSync(path.join(ROOT, dir)).filter((f) => /^\d+\.jpe?g$/i.test(f)).sort((a, b) => parseInt(a) - parseInt(b));
   if (imgs.length < 2) throw new Error(`Carrossel precisa de 2+ imagens JPEG em ${dir} (rode render.js).`);
   if (!post.legenda) throw new Error('Post sem legenda.');
+  // Regra do Enzo (2026-11-26): sem foto real, não publica.
+  if (!(post.fotos || []).some((f) => f.arquivo && fs.existsSync(path.join(ROOT, path.dirname(rel), f.arquivo))))
+    throw new Error('Post sem foto baixada (node foto.js). Post sem foto não é publicado.');
+  if (!/\nFoto: /.test(post.legenda)) throw new Error('Legenda sem a linha "Foto: <crédito>".');
   if (post.legenda.length > 2200) throw new Error(`Legenda com ${post.legenda.length} caracteres (máx. 2200).`);
   if ((post.legenda.match(/#/g) || []).length > 30) throw new Error('Mais de 30 hashtags.');
 

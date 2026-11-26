@@ -20,10 +20,22 @@ function chromePath() {
   return p;
 }
 
+const MIME = { jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp', avif: 'image/avif', gif: 'image/gif' };
+
 async function render(jsonPath) {
   const post = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
   const outDir = jsonPath.replace(/\.json$/, '');
   fs.mkdirSync(outDir, { recursive: true });
+  // Fotos baixadas pelo foto.js viram data URI (sem depender de rede no render).
+  for (const f of post.fotos || []) {
+    if (!f.arquivo) continue;
+    const p = path.join(path.dirname(jsonPath), f.arquivo);
+    if (!fs.existsSync(p)) continue;
+    const ext = path.extname(p).slice(1).toLowerCase();
+    f.src = `data:${MIME[ext] || 'image/jpeg'};base64,${fs.readFileSync(p).toString('base64')}`;
+  }
+  if (!(post.fotos || []).some((f) => f.src)) throw new Error(`${jsonPath}: sem foto baixada. Rode node foto.js primeiro. Post sem foto não é publicado.`);
+  for (const velho of fs.readdirSync(outDir).filter((x) => /^\d+\.jpe?g$/i.test(x))) fs.unlinkSync(path.join(outDir, velho));
   const browser = await puppeteer.launch({
     executablePath: chromePath(),
     headless: true,
@@ -37,20 +49,15 @@ async function render(jsonPath) {
     for (let i = 0; i < htmls.length; i++) {
       await page.setContent(htmls[i], { waitUntil: 'load', timeout: 60000 });
       await page.evaluate(() => document.fonts.ready);
-      if (i === 0) {
-        const fotoQuebrada = await page.evaluate(() => {
-          const img = document.getElementById('foto');
-          return img ? !(img.complete && img.naturalWidth > 0) : false;
-        });
-        if (fotoQuebrada) {
-          console.warn(`AVISO: foto da capa não carregou (${post.capa.foto_url}). Usando capa tipográfica.`);
-          await page.setContent(slides(post, { forcarTexto: true })[0], { waitUntil: 'load', timeout: 60000 });
-          await page.evaluate(() => document.fonts.ready);
-        }
-      }
+      const quebrada = await page.evaluate(() => [...document.images].some((img) => !(img.complete && img.naturalWidth > 0)));
+      if (quebrada) throw new Error(`${jsonPath}: foto não carregou no slide ${i + 1}.`);
       const overflow = await page.evaluate(() => {
         const el = document.querySelector('[data-slide]');
-        return el.scrollHeight > 1350 || el.scrollWidth > 1080;
+        if (el.scrollHeight > 1350 || el.scrollWidth > 1080) return true;
+        // Blocos de texto: não podem passar da área reservada; a capa não pode subir até o logo.
+        if ([...el.querySelectorAll('[data-box]')].some((n) => n.scrollHeight > n.clientHeight + 2)) return true;
+        const capa = el.querySelector('[data-capa]');
+        return !!capa && capa.getBoundingClientRect().top < 170;
       });
       if (overflow) console.warn(`AVISO: slide ${i + 1} de ${jsonPath} estourou 1080x1350. Encurte o texto.`);
       const file = path.join(outDir, `${i + 1}.jpg`);

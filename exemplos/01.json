@@ -1,42 +1,51 @@
 {
   "edicao": 1,
   "data": "2026-11-26",
-  "horario": "06:00",
-  "editoria": "IA · COMPARATIVO",
-  "fonte": "Testes de @charliehills",
-  "fonte_url": "https://exemplo.com/fonte-original",
+  "editoria": "IA · INFRAESTRUTURA",
+  "fonte": "TechCrunch",
+  "fonte_url": "https://techcrunch.com/2026/11/25/fcc-approves-spacex-plan-to-put-ai-data-centers-in-space/",
   "capa": {
-    "tipo": "texto",
-    "manchete": "Modelo novo sai 36% mais barato, mas trava mais",
-    "subtitulo": "Quatro projetos. Mesmo pedido. Primeira tentativa.",
-    "comparativo": [
-      { "rotulo": "Modelo A", "valor": "US$ 14,33" },
-      { "rotulo": "Modelo B", "valor": "US$ 9,19", "destaque": true }
-    ],
-    "foto_url": "",
-    "credito_foto": ""
+    "manchete": "SpaceX ganha aval para *1 milhão de satélites* rodando IA no espaço",
+    "posicao": "center 40%"
   },
-  "contexto": {
-    "titulo": "Mais barato, mas travou mais vezes",
-    "itens": [
-      { "numero": "4", "texto": "projetos testados com o mesmo pedido." },
-      { "numero": "107", "texto": "peças no relógio feito pelo modelo B, contra 79 do A." },
-      { "numero": "7/12", "texto": "tentativas concluídas pelo B. O A fechou 4 de 4." }
-    ]
-  },
-  "pratica": {
-    "titulo": "Faça a conta no seu próprio projeto",
-    "passos": [
-      "Rode o mesmo pedido nos dois modelos.",
-      "Anote o gasto até ter algo entregável.",
-      "Some o tempo de revisão e as tentativas que travaram."
-    ],
-    "pergunta": "Qual modelo tá no seu dia a dia hoje? Conta nos comentários."
-  },
-  "legenda": "EXEMPLO DE ESTRUTURA, NÃO PUBLICAR.\n\nFato no 1º parágrafo.\n\nContexto.\n\nOlha o detalhe: ...\n\nPra testar: ...\n\nE você? Pergunta pra comunidade.\n\nFonte: Veículo (link na bio não, citar o nome)\nFoto: Divulgação/Empresa\n\n#ia #startups #dev",
+  "legenda": "FCC aprova até 1 milhão de satélites da SpaceX para data centers em órbita\n\nA FCC deu aprovação condicional para a SpaceX implantar e operar uma constelação de até 1 milhão de satélites para processar IA em órbita, o projeto Starmind.\n\nContexto: a SpaceX tem 7 anos para pôr o primeiro satélite operacional em órbita e 14 para completar a rede. Os satélites ficariam entre 500 e 1.002 km de altitude. Amazon, Viasat e a Sociedade Astronômica Americana se opuseram, citando detritos e interferência.\n\nOlha o detalhe: a FCC ainda não aprovou o plano de detritos para satélites acima de 600 km, e há desafios de custo, resfriamento de chips no espaço e financiamento. Ou seja, data center orbital não é iminente.\n\nO que fazer: trate como aposta de longo prazo e acompanhe os próximos passos regulatórios.\n\nVisão de futuro ou hype? Opina aí.\n\nFonte: TechCrunch (confirmado também por CNBC e CBS News)\nFoto: Steve Jurvetson/Wikimedia Commons (CC BY 2.0)\n\n#ia #spacex #datacenter #infraestrutura #startups #tecnologia #fcc #inteligenciaartificial",
   "checagem": {
-    "verdadeira": "fonte primária: ...",
+    "verdadeira": "TechCrunch 25/11/2026 (https://techcrunch.com/2026/11/25/fcc-approves-spacex-plan-to-put-ai-data-centers-in-space/); CNBC (https://www.cnbc.com/2026/11/25/spacex-fcc-satellite-approval.html); CBS News (https://www.cbsnews.com/news/spacex-fcc-approval-data-centers-space/).",
     "numero_central_conferido": true,
-    "relevancia": 8
-  }
+    "relevancia": 7
+  },
+  "fotos": [
+    {
+      "commons": "File:SpaceX Starship before IFT-5.jpg",
+      "credito": "Steve Jurvetson/Wikimedia Commons (CC BY 2.0)",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/09/SpaceX_Starship_before_IFT-5.jpg/1920px-SpaceX_Starship_before_IFT-5.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "arquivo": "01/foto-1.jpg"
+    },
+    {
+      "commons": "File:SpaceX Starship ignition during IFT-5.jpg",
+      "credito": "Steve Jurvetson/Wikimedia Commons (CC BY 2.0)",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4a/SpaceX_Starship_ignition_during_IFT-5.jpg/1920px-SpaceX_Starship_ignition_during_IFT-5.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "arquivo": "01/foto-2.jpg"
+    }
+  ],
+  "slides": [
+    {
+      "tipo": "noticia",
+      "foto": 2,
+      "posicao": "center 45%",
+      "dado": {
+        "numero": "1 milhão",
+        "rotulo": "satélites no plano Starmind"
+      },
+      "texto": "A FCC, agência que regula telecom nos EUA, deu aprovação condicional ao Starmind: data centers de IA em órbita, entre 500 e 1.002 km de altitude. A SpaceX tem *7 anos para o primeiro satélite* e 14 para a rede toda."
+    },
+    {
+      "tipo": "importa",
+      "foto": 1,
+      "posicao": "center 30%",
+      "texto": "Ainda falta aprovar o plano de detritos acima de 600 km, e resfriar chip no espaço segue caro. Ou seja: *data center orbital não é para amanhã*, mas a corrida por energia para IA já saiu da Terra.",
+      "pergunta": "Visão de futuro ou hype?"
+    }
+  ],
+  "versao_modelo": 2
 }

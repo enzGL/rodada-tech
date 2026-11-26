@@ -1,118 +1,119 @@
-// Modelos dos 3 slides da Rodada Tech (aprovados pelo Enzo em 2026-11-25).
-// Cores: Sinal #FF5A1F, Tinta #0E0E0C, Papel #F3F1EA, Cinza #8A877E.
+// Modelos dos slides da Rodada Tech, v2 (2026-11-26).
+// Pedido do Enzo: cara de veículo de notícia, com FOTO em todo post (capa e miolo).
+// Fora: capa só tipográfica, tabela "número | texto", passos 01/02/03, caixa "roda de conversa", "5 notícias por dia".
+// Cores: Sinal #FF5A1F, Tinta #0E0E0C, Papel #F3F1EA, Cinza #8A877E. Laranja sobre claro: #C2410C.
+//
+// Formato do post:
+//   fotos: [{ arquivo, credito }]                       (foto.js preenche "arquivo")
+//   capa: { manchete, foto: 1, posicao: "center 30%" }  (*palavra* = destaque laranja)
+//   slides: [
+//     { tipo: "noticia", texto, dado: { numero, rotulo }, foto: 1|2, posicao },
+//     { tipo: "importa", texto, pergunta, foto: 1|2 }
+//   ]
 const esc = (s = '') =>
   String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const up = (s = '') => esc(String(s).toUpperCase());
+// *trecho* vira destaque. "cls" é o estilo do destaque.
+const marca = (s, estilo) => esc(s).replace(/\*([^*]+)\*/g, `<span style="${estilo}">$1</span>`);
+const semMarca = (s = '') => String(s).replace(/\*/g, '');
 
 const MESES = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'];
-function selo(post) {
-  const [, m, d] = (post.data || '').split('-');
-  const num = post.edicao ? `#${String(post.edicao).padStart(3, '0')} · ` : '';
-  return m ? `${num}${Number(d)} ${MESES[Number(m) - 1]}` : num;
+function dataCurta(post) {
+  const [a, m, d] = (post.data || '').split('-');
+  return m ? `${Number(d)} ${MESES[Number(m) - 1]} ${a}` : '';
 }
 
 const head = `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap">
-<style>html,body{margin:0;padding:0}*{box-sizing:border-box}</style></head><body>`;
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>html,body{margin:0;padding:0}*{box-sizing:border-box}img{display:block}</style></head><body>`;
 const foot = `</body></html>`;
 const MONO = "font-family:'JetBrains Mono',monospace";
 const ARCH = 'font-family:Archivo,sans-serif';
+const W = 1080;
+const H = 1350;
+const M = 72; // margem
 
-const anel = (ponto, size = 48) => `<svg viewBox="0 0 100 100" style="width:${size}px;height:${size}px" aria-hidden="true">
+const anel = (ponto, size = 44) => `<svg viewBox="0 0 100 100" style="width:${size}px;height:${size}px;flex:none" aria-hidden="true">
 <circle cx="50" cy="50" r="38" fill="none" stroke="#FF5A1F" stroke-width="20" stroke-dasharray="196 43" transform="rotate(-90 50 50)"></circle>
 <circle cx="29.3" cy="18.1" r="10" fill="${ponto}"></circle></svg>`;
+const logo = (cor, ponto) =>
+  `<div style="display:flex;align-items:center;gap:10px">${anel(ponto)}<span style="${ARCH};font-weight:900;font-size:34px;letter-spacing:-.04em;color:${cor}">rodada</span></div>`;
 
-// Tamanho da manchete conforme o comprimento, para não estourar o slide.
 function fit(text, sizes) {
-  const n = String(text || '').length;
+  const n = semMarca(text).length;
   for (const [max, px] of sizes) if (n <= max) return px;
   return sizes[sizes.length - 1][1];
 }
 
-function capaTexto(post) {
+function foto(post, n = 1) {
+  const f = (post.fotos || [])[n - 1] || (post.fotos || []).find((x) => x.src);
+  if (!f || !f.src) throw new Error(`Post sem foto ${n} carregada (rode foto.js). Post sem foto não é publicado.`);
+  return f;
+}
+const kicker = (txt, fundo, cor) =>
+  `<span style="align-self:flex-start;background:${fundo};color:${cor};${MONO};font-weight:700;font-size:22px;letter-spacing:.14em;padding:9px 14px 8px">${up(txt)}</span>`;
+
+// Slide 1: foto em tela cheia, manchete de jornal embaixo.
+function capa(post) {
   const c = post.capa;
-  const comp = (c.comparativo || []).slice(0, 2);
-  const h = fit(c.manchete, [[40, 128], [60, 112], [80, 96], [110, 84], [999, 72]]);
-  const compHtml = comp.length
-    ? `<div style="display:grid;grid-template-columns:repeat(${comp.length},minmax(0,1fr));border-top:2px solid #0E0E0C;border-bottom:2px solid #0E0E0C;margin-top:auto">
-${comp
-  .map(
-    (x, i) => `<div style="display:flex;flex-direction:column;gap:12px;padding:36px ${i === comp.length - 1 ? 0 : 36}px 36px ${i ? 36 : 0}px;${i < comp.length - 1 ? 'border-right:2px solid #0E0E0C' : ''}">
-<span style="${MONO};font-size:18px;letter-spacing:.12em;color:${x.destaque ? '#C2410C' : '#5C5A52'}">${up(x.rotulo)}</span>
-<span style="${ARCH};font-weight:800;font-size:${fit(x.valor, [[8, 88], [12, 72], [999, 56]])}px;line-height:1;letter-spacing:-.03em;${x.destaque ? 'color:#C2410C' : ''}">${esc(x.valor)}</span></div>`
-  )
-  .join('')}</div>`
+  const f = foto(post, c.foto || 1);
+  const h = fit(c.manchete, [[40, 118], [55, 104], [70, 92], [90, 82], [999, 72]]);
+  return `${head}<div data-slide style="width:${W}px;height:${H}px;position:relative;overflow:hidden;background:#0E0E0C;color:#F3F1EA;font-family:Inter,sans-serif">
+<img src="${f.src}" style="position:absolute;inset:0;width:${W}px;height:${H}px;object-fit:cover;object-position:${esc(c.posicao || 'center')}">
+<div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(14,14,12,.55) 0%,rgba(14,14,12,0) 16%,rgba(14,14,12,0) 34%,rgba(14,14,12,.78) 56%,rgba(14,14,12,.97) 74%,#0E0E0C 100%)"></div>
+<div style="position:absolute;left:${M}px;right:${M}px;top:${M - 8}px;display:flex;justify-content:space-between;align-items:center">
+${logo('#F3F1EA', '#F3F1EA')}<span style="${MONO};font-weight:500;font-size:20px;letter-spacing:.12em;color:#F3F1EA">${esc(dataCurta(post))}</span></div>
+<div style="position:absolute;left:${M}px;right:${M}px;bottom:${M}px;display:flex;flex-direction:column;gap:26px" data-capa>
+${kicker(post.editoria, '#FF5A1F', '#0E0E0C')}
+<h1 style="margin:0;${ARCH};font-weight:900;font-stretch:75%;font-size:${h}px;line-height:.94;letter-spacing:-.005em;text-transform:uppercase">${marca(c.manchete, 'color:#FF5A1F')}</h1>
+<div style="display:flex;justify-content:space-between;align-items:center;gap:24px;border-top:2px solid rgba(243,241,234,.22);padding-top:22px;${MONO};font-size:17px;letter-spacing:.08em;color:#A8A59B">
+<span>FOTO: ${up(f.credito || 'Divulgação')}</span><span style="flex:none;color:#F3F1EA;font-weight:700">ARRASTA →</span></div></div></div>${foot}`;
+}
+
+// Slide da notícia: foto em cima, texto de matéria embaixo, dado sobre a foto.
+function noticia(post, s, i, total) {
+  const f = foto(post, s.foto || 2);
+  const FH = 640;
+  const tam = fit(s.texto, [[180, 46], [240, 42], [300, 39], [999, 35]]);
+  const dado = s.dado
+    ? `<div style="position:absolute;left:${M}px;top:${FH - 96}px;background:#0E0E0C;padding:26px 32px 24px;display:flex;flex-direction:column;gap:6px;max-width:${W - 2 * M}px">
+<span style="${ARCH};font-weight:900;font-stretch:80%;font-size:${fit(s.dado.numero, [[6, 96], [10, 80], [999, 64]])}px;line-height:.9;color:#FF5A1F">${esc(s.dado.numero)}</span>
+<span style="${MONO};font-weight:500;font-size:19px;letter-spacing:.08em;color:#F3F1EA">${up(s.dado.rotulo)}</span></div>`
     : '';
-  return `${head}<div data-slide style="width:1080px;height:1350px;background:#F3F1EA;color:#0E0E0C;font-family:Inter,sans-serif;padding:80px;display:flex;flex-direction:column;gap:56px;overflow:hidden">
-<div style="display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #0E0E0C;padding-bottom:28px">
-<div style="display:flex;align-items:center;gap:12px">${anel('#0E0E0C')}<span style="${ARCH};font-weight:900;font-size:38px;letter-spacing:-.04em">rodada</span></div>
-<span style="${MONO};font-weight:700;font-size:20px;letter-spacing:.14em">${up(post.editoria)}</span></div>
-<h1 style="margin:0;${ARCH};font-weight:900;font-stretch:75%;font-size:${h}px;line-height:.95;letter-spacing:-.01em;text-transform:uppercase">${esc(c.manchete)}</h1>
-${c.subtitulo ? `<p style="margin:0;font-size:30px;line-height:1.4;color:#3D3B35">${esc(c.subtitulo)}</p>` : ''}
-${compHtml}
-<div style="display:flex;justify-content:space-between;align-items:center;${comp.length ? '' : 'margin-top:auto;'}${MONO};font-size:18px;letter-spacing:.08em;color:#5C5A52">
-<span>FONTE: ${up(post.fonte)}</span><span style="color:#0E0E0C">ARRASTA →</span></div></div>${foot}`;
+  return `${head}<div data-slide style="width:${W}px;height:${H}px;position:relative;overflow:hidden;background:#F3F1EA;color:#0E0E0C;font-family:Inter,sans-serif">
+<img src="${f.src}" style="position:absolute;left:0;top:0;width:${W}px;height:${FH}px;object-fit:cover;object-position:${esc(s.posicao || 'center')}">
+<span style="position:absolute;right:20px;top:20px;background:rgba(14,14,12,.62);color:#E7E4DA;${MONO};font-size:14px;letter-spacing:.06em;padding:6px 10px">FOTO: ${up(f.credito || 'Divulgação')}</span>
+${dado}
+<div style="position:absolute;left:${M}px;right:${M}px;top:${FH + (s.dado ? 128 : 64)}px;bottom:${M + 56}px;display:flex;flex-direction:column;gap:24px" data-box>
+<span style="${MONO};font-weight:700;font-size:20px;letter-spacing:.16em;color:#C2410C">${up(s.kicker || 'A notícia')}</span>
+<p style="margin:0;font-size:${tam}px;line-height:1.42;letter-spacing:-.005em">${marca(s.texto, 'font-weight:700;background:linear-gradient(180deg,transparent 58%,rgba(255,90,31,.38) 58%)')}</p></div>
+<div style="position:absolute;left:${M}px;right:${M}px;bottom:${M - 8}px;display:flex;justify-content:space-between;${MONO};font-size:17px;letter-spacing:.08em;color:#5C5A52">
+<span>FONTE: ${up(post.fonte)}</span><span>${i}/${total}</span></div></div>${foot}`;
 }
 
-function capaFoto(post) {
-  const c = post.capa;
-  const h = fit(c.manchete, [[50, 104], [75, 92], [100, 80], [999, 68]]);
-  return `${head}<div data-slide style="width:1080px;height:1350px;position:relative;overflow:hidden;background:#1C1B18;color:#F3F1EA;font-family:Inter,sans-serif">
-<img id="foto" src="${esc(c.foto_url)}" style="position:absolute;left:0;top:0;width:1080px;height:900px;object-fit:cover">
-<div style="position:absolute;left:0;bottom:0;width:1080px;height:760px;background:linear-gradient(180deg,rgba(14,14,12,0) 0%,rgba(14,14,12,.85) 38%,#0E0E0C 62%)"></div>
-<div style="position:absolute;left:80px;top:80px;right:80px;display:flex;justify-content:space-between;align-items:center">
-<div style="display:flex;align-items:center;gap:12px;background:rgba(14,14,12,.6);padding:8px 16px 8px 8px;border-radius:12px">${anel('#F3F1EA', 52)}<span style="${ARCH};font-weight:900;font-size:40px;letter-spacing:-.04em">rodada</span></div>
-<span style="${MONO};font-size:20px;letter-spacing:.1em;background:rgba(14,14,12,.6);padding:10px 16px;border-radius:8px">${esc(selo(post))}</span></div>
-<div style="position:absolute;left:80px;right:80px;bottom:96px;display:flex;flex-direction:column;gap:28px">
-<span style="position:absolute;right:0;top:-64px;${MONO};font-size:16px;letter-spacing:.08em;color:#C9C6BC">FOTO: ${up(c.credito_foto)}</span>
-<div style="display:flex;align-items:center;gap:12px"><span style="width:14px;height:14px;border-radius:50%;background:#FF5A1F"></span>
-<span style="${MONO};font-weight:700;font-size:24px;letter-spacing:.16em;color:#FF5A1F">${up(post.editoria)}</span></div>
-<h1 style="margin:0;${ARCH};font-weight:900;font-stretch:75%;font-size:${h}px;line-height:.98;letter-spacing:-.01em;text-transform:uppercase">${esc(c.manchete)}</h1>
-<div style="display:flex;justify-content:space-between;align-items:center;border-top:2px solid #2A2925;padding-top:24px;${MONO};font-size:20px;letter-spacing:.1em;color:#8A877E">
-<span>@RODADA.TECH</span><span style="color:#F3F1EA">ARRASTA →</span></div></div></div>${foot}`;
+// Slide final: por que importa + pergunta. Faixa de foto em cima, escurecida.
+function importa(post, s, i, total) {
+  const f = foto(post, s.foto || 1);
+  const FH = 540;
+  const tam = fit(s.texto, [[160, 46], [220, 42], [280, 38], [999, 34]]);
+  return `${head}<div data-slide style="width:${W}px;height:${H}px;position:relative;overflow:hidden;background:#0E0E0C;color:#F3F1EA;font-family:Inter,sans-serif">
+<img src="${f.src}" style="position:absolute;left:0;top:0;width:${W}px;height:${FH}px;object-fit:cover;object-position:${esc(s.posicao || 'center')};filter:grayscale(1) contrast(1.1)">
+<div style="position:absolute;left:0;top:0;width:${W}px;height:${FH}px;background:linear-gradient(180deg,rgba(14,14,12,.2) 0%,rgba(14,14,12,.45) 55%,#0E0E0C 100%)"></div>
+<div style="position:absolute;left:${M}px;right:${M}px;top:${FH - 40}px;bottom:${M + 56}px;display:flex;flex-direction:column;gap:30px" data-box>
+${kicker(s.kicker || 'Por que importa', '#FF5A1F', '#0E0E0C')}
+<p style="margin:0;font-size:${tam}px;line-height:1.4">${marca(s.texto, 'color:#FF5A1F;font-weight:700')}</p>
+${s.pergunta ? `<div style="margin-top:auto;border-top:3px solid #FF5A1F;padding-top:30px;display:flex;flex-direction:column;gap:14px">
+<span style="${MONO};font-weight:700;font-size:19px;letter-spacing:.16em;color:#8A877E">E VOCÊ?</span>
+<span style="${ARCH};font-weight:800;font-size:${fit(s.pergunta, [[60, 50], [90, 44], [999, 38]])}px;line-height:1.08;letter-spacing:-.01em">${esc(s.pergunta)}</span></div>` : ''}</div>
+<div style="position:absolute;left:${M}px;right:${M}px;bottom:${M - 8}px;display:flex;justify-content:space-between;${MONO};font-size:17px;letter-spacing:.08em;color:#8A877E">
+<span>FONTE: ${up(post.fonte)}</span><span style="color:#F3F1EA;font-weight:700">SEGUE @RODADA.TECH</span></div></div>${foot}`;
 }
 
-function contexto(post) {
-  const c = post.contexto;
-  const h = fit(c.titulo, [[35, 76], [60, 64], [999, 54]]);
-  const itens = (c.itens || []).slice(0, 3);
-  return `${head}<div data-slide style="width:1080px;height:1350px;background:#0E0E0C;color:#F3F1EA;font-family:Inter,sans-serif;padding:80px;display:flex;flex-direction:column;gap:56px;overflow:hidden">
-<div style="display:flex;justify-content:space-between;align-items:center;${MONO};font-size:20px;letter-spacing:.14em">
-<span style="color:#FF5A1F;font-weight:700">O QUE ACONTECEU</span><span style="color:#8A877E">2/3</span></div>
-<h2 style="margin:0;${ARCH};font-weight:900;font-stretch:75%;font-size:${h}px;line-height:1;text-transform:uppercase">${esc(c.titulo)}</h2>
-<div style="display:flex;flex-direction:column;border-top:2px solid #2A2925">
-${itens
-  .map(
-    (x) => `<div style="display:flex;gap:36px;align-items:baseline;padding:32px 0;border-bottom:2px solid #2A2925">
-<span style="${ARCH};font-weight:800;font-size:${fit(x.numero, [[4, 72], [7, 56], [999, 44]])}px;line-height:1;color:#FF5A1F;min-width:220px;max-width:300px">${esc(x.numero)}</span>
-<span style="font-size:30px;line-height:1.35">${esc(x.texto)}</span></div>`
-  )
-  .join('')}</div>
-<div style="display:flex;justify-content:space-between;align-items:center;margin-top:auto;${MONO};font-size:18px;letter-spacing:.08em;color:#8A877E">
-<span>FONTE: ${up(post.fonte)}</span><span>@RODADA.TECH</span></div></div>${foot}`;
+function slides(post) {
+  const miolo = post.slides || [];
+  if (!miolo.length) throw new Error('Post sem "slides" (formato v2).');
+  const total = miolo.length + 1;
+  return [capa(post), ...miolo.map((s, k) => (s.tipo === 'importa' ? importa : noticia)(post, s, k + 2, total))];
 }
 
-function pratica(post) {
-  const p = post.pratica;
-  const h = fit(p.titulo, [[30, 96], [50, 80], [999, 64]]);
-  return `${head}<div data-slide style="width:1080px;height:1350px;background:#FF5A1F;color:#0E0E0C;font-family:Inter,sans-serif;padding:80px;display:flex;flex-direction:column;gap:48px;overflow:hidden">
-<div style="display:flex;justify-content:space-between;align-items:center;${MONO};font-weight:700;font-size:20px;letter-spacing:.14em"><span>E PRA VOCÊ?</span><span>3/3</span></div>
-<h2 style="margin:0;${ARCH};font-weight:900;font-stretch:75%;font-size:${h}px;line-height:.96;text-transform:uppercase">${esc(p.titulo)}</h2>
-<div style="display:flex;flex-direction:column;gap:20px;font-size:32px;line-height:1.4">
-${(p.passos || [])
-  .slice(0, 3)
-  .map((s, i) => `<div style="display:flex;gap:20px"><span style="${MONO};font-weight:700">0${i + 1}</span><span>${esc(s)}</span></div>`)
-  .join('')}</div>
-<div style="margin-top:auto;background:#0E0E0C;color:#F3F1EA;border-radius:24px;padding:40px;display:flex;flex-direction:column;gap:16px">
-<span style="${MONO};font-size:18px;letter-spacing:.14em;color:#FF5A1F">RODA DE CONVERSA</span>
-<span style="${ARCH};font-weight:800;font-size:${fit(p.pergunta, [[70, 46], [999, 38]])}px;line-height:1.1">${esc(p.pergunta)}</span></div>
-<div style="display:flex;justify-content:space-between;align-items:center;${MONO};font-weight:700;font-size:20px;letter-spacing:.1em">
-<span>SEGUE @RODADA.TECH</span><span>5 NOTÍCIAS POR DIA</span></div></div>${foot}`;
-}
-
-function slides(post, { forcarTexto = false } = {}) {
-  const capa = !forcarTexto && post.capa.tipo === 'foto' && post.capa.foto_url ? capaFoto(post) : capaTexto(post);
-  return [capa, contexto(post), pratica(post)];
-}
-
-module.exports = { slides, capaTexto, capaFoto, contexto, pratica };
+module.exports = { slides, capa, noticia, importa };

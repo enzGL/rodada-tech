@@ -6,42 +6,41 @@
   "fonte": "GitHub Changelog",
   "fonte_url": "https://github.blog/changelog/2026-11-25-copilot-code-review-billing-will-default-to-the-organization",
   "capa": {
-    "tipo": "texto",
-    "manchete": "Copilot code review pode ir pra conta da sua empresa em 30/12",
-    "subtitulo": "Se ninguém escolher, a cobrança muda sozinha.",
-    "foto_url": "",
-    "credito_foto": ""
+    "manchete": "Copilot code review pode ir *pra conta da sua empresa* em 30/12",
+    "posicao": "center 35%"
   },
-  "contexto": {
-    "titulo": "A mudança do GitHub",
-    "itens": [
-      {
-        "numero": "30/12",
-        "texto": "data em que o padrão passa a ser cobrar a organização."
-      },
-      {
-        "numero": "Member",
-        "texto": "opção que mantém a cobrança atual, se escolhida antes."
-      },
-      {
-        "numero": "AI Credits",
-        "texto": "uso pago é exigido e pode aumentar o gasto da org."
-      }
-    ]
-  },
-  "pratica": {
-    "titulo": "Decida antes de 30/12",
-    "passos": [
-      "Abra a política de Copilot da organização ou enterprise.",
-      "Escolha Member para manter como está.",
-      "Se a enterprise gerencia, peça a um owner para decidir."
-    ],
-    "pergunta": "Sua empresa paga Copilot? Quem cuida disso aí?"
-  },
-  "legenda": "Copilot code review pode passar para a conta da sua empresa em 30/12\n\nO GitHub avisou que, a partir de 30 de dezembro de 2026, se nenhuma opção de cobrança estiver salva, as revisões do Copilot code review feitas por membros com licença paga serão cobradas da organização dona do repositório. Hoje elas usam o direito do próprio membro.\n\nContexto: vale para organizações e enterprises nos planos Copilot Business e Copilot Enterprise. Escolhas já salvas (Member ou Organization) continuam valendo.\n\nOlha o detalhe: cobrar a organização exige AI Credits com uso pago e pode aumentar o gasto. Até a data, configurações vazias aparecem como \"Default (Member)\" com um aviso.\n\nO que fazer: antes de 30/12, entre na política de Copilot e escolha Member (manter) ou Organization (centralizar). Se a enterprise controla, um owner precisa decidir.\n\nQuem cuida disso na sua empresa? Marca aqui.\n\nFonte: GitHub Changelog\n\n#github #copilot #dev #devops #programacao #ia #engenharia #tecnologia",
+  "legenda": "Copilot code review pode passar para a conta da sua empresa em 30/12\n\nO GitHub avisou que, a partir de 30 de dezembro de 2026, se nenhuma opção de cobrança estiver salva, as revisões do Copilot code review feitas por membros com licença paga serão cobradas da organização dona do repositório. Hoje elas usam o direito do próprio membro.\n\nContexto: vale para organizações e enterprises nos planos Copilot Business e Copilot Enterprise. Escolhas já salvas (Member ou Organization) continuam valendo.\n\nOlha o detalhe: cobrar a organização exige AI Credits com uso pago e pode aumentar o gasto. Até a data, configurações vazias aparecem como \"Default (Member)\" com um aviso.\n\nO que fazer: antes de 30/12, entre na política de Copilot e escolha Member (manter) ou Organization (centralizar). Se a enterprise controla, um owner precisa decidir.\n\nQuem cuida disso na sua empresa? Marca aqui.\n\nFonte: GitHub Changelog\nFoto: Himesh23/Wikimedia Commons (CC BY-SA 4.0)\n\n#github #copilot #dev #devops #programacao #ia #engenharia #tecnologia",
   "checagem": {
     "verdadeira": "Fonte primária: GitHub Changelog de 25/11/2026, https://github.blog/changelog/2026-11-25-copilot-code-review-billing-will-default-to-the-organization",
     "numero_central_conferido": true,
     "relevancia": 8
-  }
+  },
+  "fotos": [
+    {
+      "commons": "File:Microsoft x GitHub Copilot Experience.jpg",
+      "credito": "Himesh23/Wikimedia Commons (CC BY-SA 4.0)",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/2/2c/Microsoft_x_GitHub_Copilot_Experience.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "arquivo": "02/foto-1.jpg"
+    }
+  ],
+  "slides": [
+    {
+      "tipo": "noticia",
+      "foto": 1,
+      "posicao": "center 20%",
+      "dado": {
+        "numero": "30/12",
+        "rotulo": "prazo para escolher quem paga"
+      },
+      "texto": "O GitHub avisou que, se ninguém salvar uma opção até 30 de dezembro, as revisões do Copilot code review feitas por membros com licença paga *passam a ser cobradas da organização* dona do repositório. Vale para os planos Business e Enterprise."
+    },
+    {
+      "tipo": "importa",
+      "foto": 1,
+      "posicao": "center 60%",
+      "texto": "Cobrar a organização exige *AI Credits com uso pago* e pode aumentar o gasto sem ninguém perceber. Para manter como está, escolha *Member* na política de Copilot antes do prazo.",
+      "pergunta": "Quem cuida da conta do Copilot aí na sua empresa?"
+    }
+  ],
+  "versao_modelo": 2
 }

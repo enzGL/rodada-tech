@@ -20,18 +20,21 @@ Horários dos posts: 01 = 06:00, 02 = 09:00, 03 = 12:00, 04 = 17:00, 05 = 20:00 
    - **Interessante?** Nota de 0 a 10 de relevância para dev/founder (novidade, impacto prático, curiosidade). Mínimo 7. Sem fofoca, política ou pauta geral.
    - Falhou em qualquer um: descarta. Sem 5 aprovadas: publica menos. **Nunca publicar sem checar.**
    - Não repetir notícia já publicada (conferir `log/*.jsonl`).
-4. **Escrever** um JSON por post em `rodada/AAAA-MM-DD/01.json` ... `05.json` no formato de `exemplos/01.json`:
-   - `edicao`: número sequencial da rodada (último do log + 1).
-   - `capa.manchete` = **gancho**: número surpreendente, conflito, consequência direta ("isso muda X pra você") ou pergunta. Nunca manchete morna. Até ~80 caracteres. O slide 2 entrega o que o gancho prometeu.
-   - `capa.tipo`: `"foto"` só com foto oficial de divulgação (press kit, página do anúncio) em URL direta de imagem, com `credito_foto` ("Divulgação/Empresa"). Sem foto oficial: `"texto"` (padrão). `comparativo` é opcional (2 números lado a lado).
-   - `editoria`: `IA · LANÇAMENTO`, `STARTUPS · FUNDING`, `DEV · FERRAMENTA` etc.
-   - `contexto`: título curto + até 3 itens `{numero, texto}` com números reais da fonte (texto até ~90 caracteres).
-   - `pratica`: título + 3 passos práticos + `pergunta` para a comunidade.
-   - `fonte` (nome curto do veículo/anúncio), `fonte_url`.
-   - `legenda` (máx. 2200 caracteres, até 15 hashtags): título na 1ª linha, fato no 1º parágrafo, contexto, "Olha o detalhe:", o que fazer (passo, prompt ou ferramenta), pergunta no fim. Depois: `Fonte: <veículo>`, `Foto: <crédito>` (se tiver) e hashtags.
-   - `checagem`: `{ "verdadeira": "<fontes conferidas com URL>", "numero_central_conferido": true, "relevancia": <nota> }`.
-   - `horario`: conforme a tabela acima. Português correto, sem travessão.
-5. **Renderizar**: `node render.js rodada/AAAA-MM-DD/*.json`. Olhar os 3 JPEGs de cada post (ler as imagens). Se houver AVISO de estouro ou texto cortado, encurtar e renderizar de novo.
+4. **Escrever** um JSON por post em `rodada/AAAA-MM-DD/01.json` ... no formato de `exemplos/01.json` (modelo v2, 2026-11-26):
+   - `edicao`, `data`, `horario`, `editoria` (`IA · LANÇAMENTO`, `STARTUPS · FUNDING`, `DEV · FERRAMENTA` etc.), `fonte` (nome curto), `fonte_url`.
+   - `fotos` (**obrigatório, regra do Enzo: post sem foto não é publicado**): 1 ou 2 itens, em ordem de preferência:
+     1. `{ "pagina": "<url da matéria ou do anúncio>", "credito": "<crédito que a página dá>" }`: usa a og:image. Só serve se for **foto de verdade** (pessoa, produto, lugar, evento). Arte de changelog/blog (logo, texto em fundo liso, banner) não serve.
+     2. `{ "commons": "File:<nome>.jpg" }` do Wikimedia Commons (busca: `commons.wikimedia.org/w/api.php?action=query&generator=search&gsrnamespace=6&gsrsearch=<termo> filetype:bitmap&prop=imageinfo&iiprop=url|extmetadata`). Licença livre, crédito preenchido sozinho. Boa para CEO, sede, produto, foguete etc.
+     3. `{ "url": "<imagem direta>", "credito": "..." }`.
+     Crédito sempre real (fotógrafo/agência/"Divulgação/Empresa"); sem crédito conhecido, prefira Commons. Nunca usar foto gerada por IA.
+   - `capa`: `{ "manchete", "foto": 1, "posicao": "center 30%" }`. Manchete = **gancho** (número surpreendente, conflito, consequência direta ou pergunta), até ~75 caracteres. Marque 1 trecho com `*asteriscos*` para o destaque laranja.
+   - `slides` (2 itens):
+     - `{ "tipo": "noticia", "foto": 1|2, "posicao", "dado": { "numero", "rotulo" }, "texto" }`: o que aconteceu, escrito como matéria de jornal (quem, o quê, quando, número central), 180 a 280 caracteres. Um trecho com `*asteriscos*`. `dado` = o número que o gancho prometeu.
+     - `{ "tipo": "importa", "foto": 1|2, "texto", "pergunta" }`: por que importa para dev/founder e o que fazer, 160 a 260 caracteres, um trecho com `*asteriscos*`. `pergunta` curta para os comentários.
+   - **Nada de** listas 01/02/03, tabela de números, frases de efeito genéricas ("o futuro chegou", "isso muda tudo") nem selo "5 notícias por dia". Texto de jornalista, não de IA.
+   - `legenda` (máx. 2200 caracteres, até 15 hashtags): título na 1ª linha, fato no 1º parágrafo, contexto, "Olha o detalhe:", o que fazer, pergunta. Depois: `Fonte: <veículo>`, `Foto: <crédito>` (obrigatória, o publish.js recusa sem ela) e hashtags.
+   - `checagem`: `{ "verdadeira": "<fontes conferidas com URL>", "numero_central_conferido": true, "relevancia": <nota> }`. Português correto, sem travessão.
+5. **Foto e render**: `node foto.js rodada/AAAA-MM-DD/*.json` (baixa as fotos para a pasta do post). Se falhar ou a foto não servir, troque (outra página, Commons). Sem foto possível: **descarte o post** e use uma reserva. Depois `node render.js rodada/AAAA-MM-DD/*.json` e **olhe os 3 JPEGs** de cada post (ler as imagens): rosto ou objeto principal cortado, foto ruim, texto estourado (AVISO) ou cara de template genérico: ajuste `posicao`, troque a foto ou encurte e renderize de novo.
 6. `git add rodada log && git commit -m "rodada AAAA-MM-DD" && git push` (as imagens precisam estar no GitHub: o Instagram baixa pela URL raw).
 7. Se ainda for antes das 06:00 (America/Sao_Paulo), espere até 06:00 (`sleep`). Então `node publish.js rodada/AAAA-MM-DD/01.json` (publica o 01). Commit e push do `log/`.
 8. Se algo falhar (token, limite, imagem), registrar o erro no log, não tentar contornar e terminar com um resumo claro do problema.
@@ -39,7 +42,7 @@ Horários dos posts: 01 = 06:00, 02 = 09:00, 03 = 12:00, 04 = 17:00, 05 = 20:00 
 ## Comandos
 - `node publish.js --checar`: confere token, conta e limite (100 posts/24h).
 - `node publish.js <post.json> --teste`: cria os contêineres sem publicar.
-- `node render.js exemplos/01.json`: teste do visual.
+- `node foto.js exemplos/01.json && node render.js exemplos/01.json`: teste do visual.
 
 ## Identidade (não alterar sem o Enzo)
-Cores: Sinal #FF5A1F, Tinta #0E0E0C, Papel #F3F1EA, Cinza #8A877E. Fontes: Archivo (manchete, condensada 75%, 900), Inter (texto), JetBrains Mono (rótulos). Modelos em `templates.js`.
+Cores: Sinal #FF5A1F, Tinta #0E0E0C, Papel #F3F1EA, Cinza #8A877E. Fontes: Archivo (manchete, condensada 75%, 900), Inter (texto), JetBrains Mono (rótulos). Modelos em `templates.js` (v2, 2026-11-26: capa com foto em tela cheia, slide da notícia com foto e dado, slide "por que importa" com pergunta).
