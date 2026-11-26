@@ -108,7 +108,15 @@ function preparar(jsonRel) {
   if (!post.data || !/^\d\d:\d\d$/.test(post.horario || '')) throw new Error(`${rel}: faltam "data" e "horario" (HH:MM).`);
   const quando = dueAt(post.data, post.horario);
   if (new Date(quando) < new Date(Date.now() + 5 * 60000)) throw new Error(`${rel}: horário ${post.horario} de ${post.data} já passou.`);
-  return { rel, post, urls: imgs.map((f) => `${RAW}/${dir}/${f}`), quando };
+  const itens = [{ rel, post, urls: imgs.map((f) => `${RAW}/${dir}/${f}`), quando, tipo: 'carrossel' }];
+  // Reels do mesmo post (modelo v4): post.reel = { horario, trial }. Vídeo em <dir>/reel.mp4 (node reels.js).
+  if (post.reel && post.reel.horario) {
+    if (!fs.existsSync(path.join(ROOT, dir, 'reel.mp4'))) throw new Error(`${rel}: falta ${dir}/reel.mp4 (rode reels.js).`);
+    const qr = dueAt(post.data, post.reel.horario);
+    if (new Date(qr) >= new Date(Date.now() + 5 * 60000))
+      itens.push({ rel: `${rel}#reel`, post, urls: [`${RAW}/${dir}/reel.mp4`], quando: qr, tipo: 'reel', trial: post.reel.trial !== false });
+  }
+  return itens;
 }
 
 async function urlOk(u) {
@@ -125,15 +133,16 @@ async function agendar(arquivos, { teste = false } = {}) {
   const itens = [];
   for (const a of arquivos) {
     try {
-      const it = preparar(a);
-      if (feitos.has(it.rel)) console.log(`PULA ${it.rel}: já publicado/agendado.`);
-      else itens.push(it);
+      for (const it of preparar(a)) {
+        if (feitos.has(it.rel)) console.log(`PULA ${it.rel}: já publicado/agendado.`);
+        else itens.push(it);
+      }
     } catch (e) {
       console.error(`RECUSADO ${e.message}`);
     }
   }
   if (teste) {
-    for (const it of itens) console.log(`TESTE ${it.rel} -> ${it.quando} (${it.urls.length} slides)`);
+    for (const it of itens) console.log(`TESTE ${it.rel} -> ${it.quando} (${it.tipo === 'reel' ? `reel${it.trial ? ' trial' : ''}` : `${it.urls.length} slides`})`);
     return;
   }
   if (!itens.length) return;
@@ -145,11 +154,19 @@ async function agendar(arquivos, { teste = false } = {}) {
       console.error(`FILA CHEIA (${FILA_MAX}): ${it.rel} fica para a próxima execução.`);
       continue;
     }
-    for (const u of it.urls) if (!(await urlOk(u))) throw new Error(`Imagem não acessível: ${u} (fez git push?)`);
-    const assets = it.urls.map((u) => `{ image: { url: ${JSON.stringify(u)} } }`).join(' ');
+    for (const u of it.urls) if (!(await urlOk(u))) throw new Error(`Arquivo não acessível: ${u} (fez git push?)`);
+    const reel = it.tipo === 'reel';
+    const assets = reel
+      ? `{ video: { url: ${JSON.stringify(it.urls[0])}, metadata: { thumbnailOffset: 0 } } }`
+      : it.urls.map((u) => `{ image: { url: ${JSON.stringify(u)} } }`).join(' ');
+    // Coautoria (Collab): post.collab ou BUFFER_COLLAB (usuário do Instagram, sem @).
+    const collab = it.post.collab || process.env.BUFFER_COLLAB;
+    const meta = reel
+      ? `{ instagram: { type: reel, shouldShareToFeed: ${it.trial ? 'false' : 'true'}${it.trial ? ', trialReelGraduationStrategy: automatic' : ''}${collab ? `, collaborators: ${JSON.stringify(collab)}` : ''} } }`
+      : `{ instagram: { type: post, shouldShareToFeed: true${collab ? `, collaborators: ${JSON.stringify(collab)}` : ''} } }`;
     const d = await gql(
-      `mutation($t: String!) { createPost(input: { text: $t, channelId: "${ctx.canal.id}", schedulingType: automatic, mode: customScheduled, dueAt: "${it.quando}", assets: [${assets}], metadata: { instagram: { type: post, shouldShareToFeed: true } } }) { ... on PostActionSuccess { post { id dueAt } } ... on MutationError { message } } }`,
-      { t: it.post.legenda }
+      `mutation($t: String!) { createPost(input: { text: $t, channelId: "${ctx.canal.id}", schedulingType: automatic, mode: customScheduled, dueAt: "${it.quando}", assets: [${assets}], metadata: ${meta} }) { ... on PostActionSuccess { post { id dueAt } } ... on MutationError { message } } }`,
+      { t: (reel && it.post.reel.legenda) || it.post.legenda }
     );
     const r = d.createPost;
     if (!r.post) {
