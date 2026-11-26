@@ -4,41 +4,44 @@ Repositório público com o pipeline do @rodada.tech (Instagram). Quem roda isto
 
 Nunca usar o travessão "—" em nenhum texto. Usar vírgula, dois-pontos, parênteses ou ponto final.
 
+## Estratégia (aprovada pelo Enzo em 2026-11-26)
+A conta começou com 0 seguidores: carrossel no feed quase não é entregue a quem não segue. Por isso:
+- **Volume: 1 carrossel + 1 Reels por dia** (do mesmo post). Nada de 5 a 7 posts por dia até a conta ter base (~1.000 seguidores, hipótese).
+- **Pauta: ecossistema brasileiro primeiro** (startups, founders, VCs, rodadas, aquisições, demissões, brigas públicas checadas), depois big tech com número forte. Uma notícia boa vale mais que cinco medianas.
+- **Modelo v4 (3:4, 1080x1440)**, inspirado no @notstartups.ai: protagonista em foto, editoria espaçada, manchete factual; miolo com **print real da matéria/anúncio** (a prova) e 1 a 2 frases curtas; último slide de assinatura "Siga e compartilhe" (automático).
+- **Reels**: `reels.js` gera o MP4 9:16 a partir do post v4 e o Buffer agenda como **Trial Reel** (mostrado primeiro a quem não segue).
+- Acusação contra pessoa ou empresa (golpe, fraude, crime) só com **2 veículos confiáveis independentes** ou documento oficial; a fala de um perfil de Instagram não basta. Atribuir sempre ("disse X ao Y").
+
 ## Rotinas
 | Horário (São Paulo) | O que faz |
 |---|---|
-| 5h30 | **Rotina "gerar"**: monta a rodada do dia (seção abaixo), faz push e publica o post 01 às 6h. |
+| 5h30 | **Rotina "gerar"**: monta o post do dia (seção abaixo), faz push e agenda no Buffer: carrossel às 12:00 e Reels às 19:00 (hipótese de horário, ajustar pelas métricas). |
 | 9h, 12h, 17h, 20h | **Rotina "publicar"** (reserva): `git pull`, `npm ci`, `node publish.js --proximo` (pula o que já foi agendado no Buffer), depois commit e push do `log/`. |
-
-Horários dos posts: 01 = 06:00, 02 = 09:00, 03 = 12:00, 04 = 17:00, 05 = 20:00 (hipótese, ajustar pelas métricas).
 
 ## Rotina "gerar" (passo a passo)
 1. `npm ci` (ou `npm install`). Data de hoje em America/Sao_Paulo = `AAAA-MM-DD`.
-2. **Coletar** notícias das últimas 24h (WebSearch + fontes de `fontes.md`). Temas: IA, startups, funding, dev, ferramentas. Pegar 10 a 15 candidatas.
+2. **Coletar** notícias das últimas 24h (WebSearch + fontes de `fontes.md`, começando pelas brasileiras). Pegar 10 a 15 candidatas.
 3. **Checar cada candidata** (regra do Enzo, obrigatória):
-   - **Verdadeira?** Fonte primária (anúncio oficial, documento, blog/perfil da empresa) ou 2 veículos confiáveis independentes. O número central do post conferido na fonte. Nada de boato, "segundo rumores", print sem origem.
-   - **Interessante?** Nota de 0 a 10 de relevância para dev/founder (novidade, impacto prático, curiosidade). Mínimo 7. Sem fofoca, política ou pauta geral.
-   - Falhou em qualquer um: descarta. Sem 5 aprovadas: publica menos. **Nunca publicar sem checar.**
+   - **Verdadeira?** Fonte primária (anúncio oficial, documento, blog/perfil da empresa) ou 2 veículos confiáveis independentes. O número central conferido na fonte. Nada de boato, "segundo rumores", print sem origem.
+   - **Interessante?** Nota de 0 a 10 para dev/founder brasileiro. Mínimo 7. Pesa mais: Brasil, conflito público, número grande, founder/CEO conhecido. Sem fofoca de vida pessoal nem política partidária.
+   - Escolher **a melhor** (só 1 post por dia). Sem nenhuma aprovada: não publica.
    - Não repetir notícia já publicada (conferir `log/*.jsonl`).
-4. **Escrever** um JSON por post em `rodada/AAAA-MM-DD/01.json` ... no formato de `exemplos/01.json` (modelo v2, 2026-11-26):
-   - `edicao`, `data`, `horario`, `editoria` (`IA · LANÇAMENTO`, `STARTUPS · FUNDING`, `DEV · FERRAMENTA` etc.), `fonte` (nome curto), `fonte_url`.
-   - `fotos` (**obrigatório, regra do Enzo: post sem foto não é publicado**): 1 ou 2 itens, em ordem de preferência:
-     1. `{ "pagina": "<url da matéria ou do anúncio>", "credito": "<crédito que a página dá>" }`: usa a og:image. Só serve se for **foto de verdade** (pessoa, produto, lugar, evento). Arte de changelog/blog (logo, texto em fundo liso, banner) não serve.
-     2. `{ "commons": "File:<nome>.jpg" }` do Wikimedia Commons (busca: `commons.wikimedia.org/w/api.php?action=query&generator=search&gsrnamespace=6&gsrsearch=<termo> filetype:bitmap&prop=imageinfo&iiprop=url|extmetadata`). Licença livre, crédito preenchido sozinho. Boa para CEO, sede, produto, foguete etc.
-     3. `{ "url": "<imagem direta>", "credito": "..." }`.
-     Crédito sempre real (fotógrafo/agência/"Divulgação/Empresa"); sem crédito conhecido, prefira Commons. Nunca usar foto gerada por IA.
-   - `capa`: `{ "manchete", "foto": 1, "posicao": "center 30%" }`. Manchete = **gancho** (número surpreendente, conflito, consequência direta ou pergunta), até ~75 caracteres. Marque 1 trecho com `*asteriscos*` para o destaque laranja.
-   - `slides` (2 itens):
-     - `{ "tipo": "noticia", "foto": 1|2, "posicao", "dado": { "numero", "rotulo" }, "texto" }`: o que aconteceu, escrito como matéria de jornal (quem, o quê, quando, número central), 180 a 280 caracteres. Um trecho com `*asteriscos*`. `dado` = o número que o gancho prometeu.
-     - `{ "tipo": "importa", "foto": 1|2, "texto", "pergunta" }`: por que importa para dev/founder e o que fazer, 160 a 260 caracteres, um trecho com `*asteriscos*`. `pergunta` curta para os comentários.
-   - **Nada de** listas 01/02/03, tabela de números, frases de efeito genéricas ("o futuro chegou", "isso muda tudo") nem selo "5 notícias por dia". Texto de jornalista, não de IA.
-   - `legenda` (máx. 2200 caracteres, até 15 hashtags): título na 1ª linha, fato no 1º parágrafo, contexto, "Olha o detalhe:", o que fazer, pergunta. Depois: `Fonte: <veículo>`, `Foto: <crédito>` (obrigatória, o publish.js recusa sem ela) e hashtags.
-   - `checagem`: `{ "verdadeira": "<fontes conferidas com URL>", "numero_central_conferido": true, "relevancia": <nota> }`. Português correto, sem travessão.
-5. **Foto e render**: `node foto.js rodada/AAAA-MM-DD/*.json` (baixa as fotos para a pasta do post). Se falhar ou a foto não servir, troque (outra página, Commons). Sem foto possível: **descarte o post** e use uma reserva. Depois `node render.js rodada/AAAA-MM-DD/*.json` e **olhe os 3 JPEGs** de cada post (ler as imagens): rosto ou objeto principal cortado, foto ruim, texto estourado (AVISO) ou cara de template genérico: ajuste `posicao`, troque a foto ou encurte e renderize de novo.
-6. `git add rodada log && git commit -m "rodada AAAA-MM-DD" && git push` (as imagens precisam estar no GitHub: o Instagram baixa pela URL raw).
-7. **Agendar no Buffer** (caminho principal desde 2026-11-26): `node buffer.js rodada/AAAA-MM-DD/*.json`. Agenda cada post no seu `horario` (São Paulo) no canal Instagram rodada.tech. O plano Free aceita **no máximo 10 agendados por vez**; o script respeita isso e deixa o excedente para a execução seguinte. Commit e push do `log/`.
-   - Reserva: se o Buffer falhar (sem `BUFFER_TOKEN`, rede, erro da API), registre o erro e, se for antes das 06:00, espere até 06:00 e publique o primeiro post com `node publish.js rodada/AAAA-MM-DD/01.json`. A rotina "publicar" cuida dos demais horários. Nunca publique o mesmo post pelos dois caminhos (o log marca `agendado_buffer` e `publicado`).
-8. Se algo falhar (token, limite, imagem), registrar o erro no log, não tentar contornar e terminar com um resumo claro do problema.
+4. **Escrever** `rodada/AAAA-MM-DD/01.json` no **modelo v4** (exemplo real: `rodada/2026-11-27/01.json`):
+   - `versao_modelo: 4`, `formato: "3:4"`, `edicao`, `data`, `horario: "12:00"`, `reel: { "horario": "19:00", "trial": true }`, `editoria` (2 a 3 palavras: "Rodada de investimento", "Venture capital", "Inteligência artificial", "Big tech", "Aquisição", "Demissões"), `fonte`, `fonte_url`.
+   - `fotos` (**obrigatório: post sem foto não é publicado**), em ordem:
+     1. Foto do protagonista (pessoa, produto, lugar): `{ "pagina": "<url>", "credito": "..." }` (og:image, só se for foto de verdade), `{ "url": "<imagem direta>", "credito": "..." }` ou `{ "commons": "File:<nome>.jpg" }` (Wikimedia Commons, crédito automático).
+     2. **Print real** da matéria ou do anúncio: `{ "print": "<url>", "credito": "Reprodução/<veículo>", "largura": 900, "altura": 1000 }` (o foto.js captura a página). Opcional `"seletor"` CSS para recortar um trecho. Nunca montar print falso.
+     Crédito sempre real. Nunca foto gerada por IA.
+   - `capa`: `{ "manchete", "foto": 1, "posicao": "center 30%", "circulo": { "foto": N, "posicao" } }` (círculo opcional: logo ou 2ª pessoa). Manchete factual e completa, 70 a 110 caracteres, estilo "Quem, fazendo o quê, com qual número". Um trecho com `*asteriscos*` (laranja).
+   - `slides` (2 a 3): `{ "foto": N, "encaixe": "moldura" (print/imagem inteira) | "cheia" (foto em cima), "posicao", "texto" }`. Texto curto, 80 a 160 caracteres, frases de jornal; blocos separados por linha em branco; um trecho com `*asteriscos*`. Pelo menos 1 slide com print (a prova). O último slide (assinatura) é automático.
+   - **Nada de** frases de efeito genéricas ("o futuro chegou", "isso muda tudo"), listas 01/02/03 ou selos. Texto de jornalista, não de IA.
+   - `legenda` (máx. 2200 caracteres, até 12 hashtags): título na 1ª linha, a matéria completa (fato, contexto, "Olha o detalhe:", "Pra quem constrói:"), pergunta para os comentários, "Siga @rodada.tech para a rodada diária de IA, startups e tecnologia." Depois `Fonte: <veículo>`, `Foto: <crédito>` (obrigatória) e hashtags.
+   - `checagem`: `{ "verdadeira": "<fontes com URL>", "numero_central_conferido": true, "relevancia": <nota> }`. Português correto, sem travessão.
+5. **Foto, render e Reels**: `node foto.js rodada/AAAA-MM-DD/01.json`, `node render.js rodada/AAAA-MM-DD/01.json` e `node reels.js rodada/AAAA-MM-DD/01.json`. **Olhe todos os JPEGs** e 2 quadros do Reels (`ffmpeg -ss 2 -i .../reel.mp4 -frames:v 1 quadro.jpg`): rosto cortado, print ilegível ou com banner tampando, texto estourado (AVISO): ajuste e gere de novo. Sem foto possível: descarte e use a reserva.
+6. `git add rodada log && git commit -m "rodada AAAA-MM-DD" && git push` (imagens e vídeo precisam estar no GitHub).
+7. **Agendar no Buffer**: `node buffer.js rodada/AAAA-MM-DD/01.json` (agenda o carrossel e o Reels). Fila máx. 10. Commit e push do `log/`.
+   - Reserva: se o Buffer falhar, registre o erro; a rotina "publicar" publica o carrossel pela API no horário. O Reels só sai pelo Buffer. Nunca publique o mesmo post pelos dois caminhos.
+8. Se algo falhar (token, limite, imagem), registrar no log, não contornar e terminar com um resumo claro.
 
 ## Comandos
 - `node buffer.js --checar` / `--fila`: confere a chave do Buffer, o canal e a fila (máx. 10).
@@ -46,6 +49,9 @@ Horários dos posts: 01 = 06:00, 02 = 09:00, 03 = 12:00, 04 = 17:00, 05 = 20:00 
 - `node publish.js --checar`: confere token, conta e limite (100 posts/24h).
 - `node publish.js <post.json> --teste`: cria os contêineres sem publicar.
 - `node foto.js exemplos/01.json && node render.js exemplos/01.json`: teste do visual.
+- `node reels.js <post.json>`: gera o Reels (MP4 9:16) de um post v4.
+- `node buffer.js --remover <buffer_id> [...]`: tira posts da fila do Buffer.
+- Coautoria (Collab): `"collab": "<usuario>"` no post ou variável `BUFFER_COLLAB`.
 
 ## Identidade (não alterar sem o Enzo)
-Cores: Sinal #FF5A1F, Tinta #0E0E0C, Papel #F3F1EA, Cinza #8A877E. Fontes: Archivo (manchete, condensada 75%, 900), Inter (texto), JetBrains Mono (rótulos). Modelos em `templates.js` (v2, 2026-11-26: capa com foto em tela cheia, slide da notícia com foto e dado, slide "por que importa" com pergunta).
+Cores: Sinal #FF5A1F, Tinta #0E0E0C, Papel #F3F1EA, Cinza #8A877E. Fontes: Archivo (manchete, condensada 75%, 900), Inter (texto), JetBrains Mono (rótulos). Modelos em `templates.js`: **v4 (padrão desde 2026-11-26)**, 3:4, capa com protagonista, slides com print/foto e frase curta, assinatura; v2 e modelos de teste A a E continuam disponíveis para posts antigos.
