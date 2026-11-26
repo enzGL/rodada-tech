@@ -1,0 +1,47 @@
+{
+  "edicao": 1,
+  "data": "2026-11-26",
+  "horario": "17:00",
+  "editoria": "IA · INFRAESTRUTURA",
+  "fonte": "TechCrunch",
+  "fonte_url": "https://techcrunch.com/2026/11/25/fcc-approves-spacex-plan-to-put-ai-data-centers-in-space/",
+  "capa": {
+    "tipo": "texto",
+    "manchete": "FCC aprova até 1 milhão de satélites para data centers em órbita",
+    "subtitulo": "Aprovação condicional. Ainda não é para já.",
+    "foto_url": "",
+    "credito_foto": ""
+  },
+  "contexto": {
+    "titulo": "O que foi aprovado e o que falta",
+    "itens": [
+      {
+        "numero": "1 milhão",
+        "texto": "de satélites no máximo, no plano Starmind da SpaceX."
+      },
+      {
+        "numero": "7 anos",
+        "texto": "para o primeiro satélite operacional; 14 para a rede toda."
+      },
+      {
+        "numero": "600 km",
+        "texto": "acima disso, o plano de detritos ainda não foi aprovado."
+      }
+    ]
+  },
+  "pratica": {
+    "titulo": "O que fazer com isso",
+    "passos": [
+      "Trate como aposta de longo prazo, não como roadmap.",
+      "Acompanhe o custo de computação, o gargalo real.",
+      "Siga o que a FCC ainda precisa decidir sobre detritos."
+    ],
+    "pergunta": "Data center no espaço: visão de futuro ou hype?"
+  },
+  "legenda": "FCC aprova até 1 milhão de satélites da SpaceX para data centers em órbita\n\nA FCC deu aprovação condicional para a SpaceX implantar e operar uma constelação de até 1 milhão de satélites para processar IA em órbita, o projeto Starmind.\n\nContexto: a SpaceX tem 7 anos para pôr o primeiro satélite operacional em órbita e 14 para completar a rede. Os satélites ficariam entre 500 e 1.002 km de altitude. Amazon, Viasat e a Sociedade Astronômica Americana se opuseram, citando detritos e interferência.\n\nOlha o detalhe: a FCC ainda não aprovou o plano de detritos para satélites acima de 600 km, e há desafios de custo, resfriamento de chips no espaço e financiamento. Ou seja, data center orbital não é iminente.\n\nO que fazer: trate como aposta de longo prazo e acompanhe os próximos passos regulatórios.\n\nVisão de futuro ou hype? Opina aí.\n\nFonte: TechCrunch (confirmado também por CNBC e CBS News)\n\n#ia #spacex #datacenter #infraestrutura #startups #tecnologia #fcc #inteligenciaartificial",
+  "checagem": {
+    "verdadeira": "TechCrunch 25/11/2026 (https://techcrunch.com/2026/11/25/fcc-approves-spacex-plan-to-put-ai-data-centers-in-space/); CNBC (https://www.cnbc.com/2026/11/25/spacex-fcc-satellite-approval.html); CBS News (https://www.cbsnews.com/news/spacex-fcc-approval-data-centers-space/).",
+    "numero_central_conferido": true,
+    "relevancia": 7
+  }
+}

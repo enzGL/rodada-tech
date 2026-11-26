@@ -1,0 +1,47 @@
+{
+  "edicao": 1,
+  "data": "2026-11-26",
+  "horario": "06:00",
+  "editoria": "IA · PRODUTO",
+  "fonte": "TechCrunch",
+  "fonte_url": "https://techcrunch.com/2026/11/25/openai-says-heavy-chatgpt-users-may-hit-limits-sooner-as-it-merges-chat-and-work/",
+  "capa": {
+    "tipo": "texto",
+    "manchete": "ChatGPT junta Chat e Work e seu limite pode acabar mais cedo",
+    "subtitulo": "Um medidor só para tudo. Só o Instant fica de fora.",
+    "foto_url": "",
+    "credito_foto": ""
+  },
+  "contexto": {
+    "titulo": "O que muda no seu plano",
+    "itens": [
+      {
+        "numero": "1",
+        "texto": "medidor compartilhado para Chat e Work."
+      },
+      {
+        "numero": "Dez",
+        "texto": "mês da ampliação dos limites compartilhados, diz a OpenAI."
+      },
+      {
+        "numero": "Instant",
+        "texto": "segue ilimitado e fora da conta do limite."
+      }
+    ]
+  },
+  "pratica": {
+    "titulo": "Proteja seu limite",
+    "passos": [
+      "Use o Instant para dúvidas simples.",
+      "Guarde os modelos de raciocínio para tarefa pesada.",
+      "Confira o consumo em Configurações, Uso."
+    ],
+    "pergunta": "Você é de bater o limite do ChatGPT? Conta nos comentários."
+  },
+  "legenda": "ChatGPT vai juntar Chat e Work e o limite pode acabar mais cedo\n\nA OpenAI começou a liberar para um grupo pequeno de usuários (começando por alguns assinantes Pro) uma experiência unificada de Chat e Work no ChatGPT. Os dois passam a gastar o mesmo medidor de uso.\n\nContexto: segundo a OpenAI, a maioria não deve notar diferença, mas uma pequena fração dos usuários mais intensos pode bater o limite antes. A ampliação dos limites compartilhados está prevista para dezembro.\n\nOlha o detalhe: as conversas com o modelo Instant seguem ilimitadas, não contam no limite e continuam disponíveis mesmo depois que você o atinge. Modelos de raciocínio e tarefas de agente gastam mais.\n\nO que fazer: use o Instant para o básico e reserve o raciocínio pesado para quando precisar. Veja seu consumo em Configurações, Uso.\n\nE você, já sentiu o limite apertar? Conta aqui.\n\nFonte: TechCrunch, com página de suporte da OpenAI\n\n#ia #chatgpt #openai #inteligenciaartificial #dev #startups #tecnologia #produtividade",
+  "checagem": {
+    "verdadeira": "TechCrunch 25/11/2026 (https://techcrunch.com/2026/11/25/openai-says-heavy-chatgpt-users-may-hit-limits-sooner-as-it-merges-chat-and-work/); página de suporte da OpenAI sobre limites compartilhados a partir de dezembro (https://help.openai.com/en/articles/20001625-understanding-chatgpt-and-codex-usage-limits); anúncio de Tibo Sottiaux, líder de produto, no X, citado no TechCrunch e no Hacker News.",
+    "numero_central_conferido": true,
+    "relevancia": 8
+  }
+}

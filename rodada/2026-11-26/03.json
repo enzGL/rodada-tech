@@ -1,0 +1,58 @@
+{
+  "edicao": 1,
+  "data": "2026-11-26",
+  "horario": "12:00",
+  "editoria": "DEV · FERRAMENTA",
+  "fonte": "Vercel Changelog",
+  "fonte_url": "https://vercel.com/changelog/workflows-speculative-execution",
+  "capa": {
+    "tipo": "texto",
+    "manchete": "Workflow SDK da Vercel ficou 12x mais rápido entre os passos",
+    "subtitulo": "De 85 ms para 7 ms, com execução especulativa.",
+    "comparativo": [
+      {
+        "rotulo": "SDK 5.2",
+        "valor": "85 ms"
+      },
+      {
+        "rotulo": "SDK 5.8",
+        "valor": "7 ms",
+        "destaque": true
+      }
+    ],
+    "foto_url": "",
+    "credito_foto": ""
+  },
+  "contexto": {
+    "titulo": "Os números da Vercel",
+    "itens": [
+      {
+        "numero": "85 → 7 ms",
+        "texto": "overhead entre passos (p75), cerca de 12x menor."
+      },
+      {
+        "numero": "13,5 → 2,5 s",
+        "texto": "overhead com 256 passos em paralelo."
+      },
+      {
+        "numero": "3,0 → 0,9 s",
+        "texto": "overhead de um loop de agente de 5 turnos."
+      }
+    ]
+  },
+  "pratica": {
+    "titulo": "Antes de atualizar",
+    "passos": [
+      "Rode npm install workflow@latest (5.8 ou mais).",
+      "Garanta passos idempotentes: use o stepId como chave.",
+      "Passo que não pode repetir: maxRetries = 0."
+    ],
+    "pergunta": "Você usa workflows duráveis em produção? Conta qual."
+  },
+  "legenda": "Workflow SDK da Vercel ficou 12x mais rápido entre os passos\n\nA Vercel lançou o Workflow SDK 5.8 com um motor reescrito. O overhead entre passos (p75) caiu de 85 ms para 7 ms, cerca de 12x menos.\n\nContexto: com 256 passos em paralelo, o overhead foi de 13,5 s para 2,5 s. Num loop de agente de 5 turnos, de 3,0 s para 0,9 s. Os números são benchmarks da própria Vercel, comparando a versão 5.2 com a 5.8.\n\nOlha o detalhe: o motor executa passos de forma especulativa, então um passo pode rodar de novo. Só passos idempotentes são seguros. Passar o stepId como chave de idempotência resolve, e quem não pode repetir deve usar maxRetries = 0.\n\nPra testar: npm install workflow@latest. Novas execuções já usam o motor novo. Para ficar no antigo, WORKFLOW_SPEC_VERSION=8. Quem está na 4.x precisa seguir o guia de upgrade antes.\n\nVocê usa workflows duráveis? Conta nos comentários.\n\nFonte: Vercel Changelog\n\n#vercel #dev #javascript #typescript #agentes #ia #backend #programacao #tecnologia",
+  "checagem": {
+    "verdadeira": "Fonte primária: Vercel Changelog de 25/11/2026, https://vercel.com/changelog/workflows-speculative-execution (benchmarks da própria Vercel, sinalizado na legenda).",
+    "numero_central_conferido": true,
+    "relevancia": 8
+  }
+}
