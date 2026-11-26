@@ -1,6 +1,6 @@
 # Rodada Tech: instruções da rotina diária
 
-Repositório público com o pipeline do @rodada.tech (Instagram). Quem roda isto é a rotina agendada do Claude Code na nuvem, no ambiente **Rodada** (variáveis `IG_TOKEN` e `IG_USER_ID`).
+Repositório público com o pipeline do @rodada.tech (Instagram). Quem roda isto é a rotina agendada do Claude Code na nuvem, no ambiente **Rodada** (variáveis `IG_TOKEN`, `IG_USER_ID` e `IG_GRAPH_HOST=graph.facebook.com`; o token é do login unificado, começa com EAA).
 
 Nunca usar o travessão "—" em nenhum texto. Usar vírgula, dois-pontos, parênteses ou ponto final.
 

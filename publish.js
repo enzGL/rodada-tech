@@ -168,9 +168,8 @@ async function proximo(opts) {
 
 async function checar() {
   need();
-  const me = await call('GET', 'me', { fields: 'user_id,username,account_type' });
-  console.log('Conta:', JSON.stringify(me));
-  if (String(me.user_id) !== String(USER)) console.warn(`AVISO: IG_USER_ID (${USER}) difere do user_id do token (${me.user_id}).`);
+  const conta = await call('GET', USER, { fields: 'username,name' });
+  console.log('Conta:', JSON.stringify(conta), 'host:', HOST);
   const lim = await call('GET', `${USER}/content_publishing_limit`, { fields: 'config,quota_usage' });
   console.log('Limite:', JSON.stringify(lim.data || lim));
 }
