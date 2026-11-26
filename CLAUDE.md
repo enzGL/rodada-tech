@@ -7,7 +7,7 @@ Nunca usar o travessão "—" em nenhum texto. Usar vírgula, dois-pontos, parê
 ## Rotinas
 | Horário (São Paulo) | O que faz |
 |---|---|
-| 5h30 | **Rotina "gerar"**: monta a rodada do dia (seção abaixo), faz push e publica o post 01 (`node publish.js --proximo`). |
+| 5h30 | **Rotina "gerar"**: monta a rodada do dia (seção abaixo), faz push e publica o post 01 às 6h. |
 | 9h, 12h, 17h, 20h | **Rotina "publicar"**: `git pull`, `npm ci`, `node publish.js --proximo`, depois commit e push do `log/`. |
 
 Horários dos posts: 01 = 06:00, 02 = 09:00, 03 = 12:00, 04 = 17:00, 05 = 20:00 (hipótese, ajustar pelas métricas).
@@ -33,7 +33,7 @@ Horários dos posts: 01 = 06:00, 02 = 09:00, 03 = 12:00, 04 = 17:00, 05 = 20:00 
    - `horario`: conforme a tabela acima. Português correto, sem travessão.
 5. **Renderizar**: `node render.js rodada/AAAA-MM-DD/*.json`. Olhar os 3 JPEGs de cada post (ler as imagens). Se houver AVISO de estouro ou texto cortado, encurtar e renderizar de novo.
 6. `git add rodada log && git commit -m "rodada AAAA-MM-DD" && git push` (as imagens precisam estar no GitHub: o Instagram baixa pela URL raw).
-7. `node publish.js --proximo` (publica o 01). Commit e push do `log/`.
+7. Se ainda for antes das 06:00 (America/Sao_Paulo), espere até 06:00 (`sleep`). Então `node publish.js rodada/AAAA-MM-DD/01.json` (publica o 01). Commit e push do `log/`.
 8. Se algo falhar (token, limite, imagem), registrar o erro no log, não tentar contornar e terminar com um resumo claro do problema.
 
 ## Comandos
