@@ -66,7 +66,7 @@ function publicados(data) {
   const f = logFile(data);
   if (!fs.existsSync(f)) return new Set();
   return new Set(
-    fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)).filter((x) => x.status === 'publicado').map((x) => x.post)
+    fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)).filter((x) => ['publicado', 'agendado_buffer'].includes(x.status)).map((x) => x.post)
   );
 }
 function registrar(data, entry) {
