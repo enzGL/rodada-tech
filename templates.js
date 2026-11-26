@@ -30,7 +30,8 @@ const foot = `</body></html>`;
 const MONO = "font-family:'JetBrains Mono',monospace";
 const ARCH = 'font-family:Archivo,sans-serif';
 const W = 1080;
-const H = 1350;
+let H = 1350; // 1440 (3:4) desde o modelo v4; 1350 (4:5) nos antigos
+const dims = (post) => ({ w: 1080, h: post && post.formato === "3:4" ? 1440 : 1350 });
 const M = 72; // margem
 
 const anel = (ponto, size = 44) => `<svg viewBox="0 0 100 100" style="width:${size}px;height:${size}px;flex:none" aria-hidden="true">
@@ -235,10 +236,69 @@ ${s.nota ? `<p style="margin:0;border-top:3px solid #0E0E0C;padding-top:28px;fon
 <span>FONTE: ${up(s.fonte || post.fonte)}</span><span>${i}/${total}</span></div></div>${foot}`;
 }
 
+// ---------------------------------------------------------------------------
+// Modelo v4 (2026-11-26), a partir do @notstartups.ai (estratégia aprovada pelo Enzo):
+// 3:4 (1080x1440), protagonista em foto + círculo (logo/2ª pessoa), editoria espaçada,
+// manchete factual em caixa alta; miolo = imagem real (prova) + 1 a 2 frases curtas;
+// último slide = assinatura "Siga e compartilhe". Crédito da foto pequeno no pé.
+// Post: { versao_modelo: 4, formato: "3:4", editoria, capa: { manchete, foto, posicao, circulo: { foto, posicao } },
+//         slides: [{ foto, posicao, encaixe: "moldura"|"cheia", texto }] }
+// ---------------------------------------------------------------------------
+const logoV4 = (tam = 40) => `<div style="display:flex;align-items:center;gap:12px">${anel('#F3F1EA', tam)}<span style="${ARCH};font-weight:900;font-size:${Math.round(tam * 0.82)}px;letter-spacing:-.04em;color:#F3F1EA">rodada</span></div>`;
+const editoriaV4 = (txt) => `<span style="${ARCH};font-weight:700;font-size:26px;letter-spacing:.28em;color:#F3F1EA">${up(txt)}</span>`;
+const creditoV4 = (f) => `<span style="position:absolute;right:${M}px;bottom:28px;${MONO};font-size:14px;letter-spacing:.06em;color:rgba(243,241,234,.55)">FOTO: ${up(f.credito || 'Divulgação')}</span>`;
+const manV4 = (s, px, tag = 'h1') => `<${tag} style="margin:0;${ARCH};font-weight:800;font-size:${px}px;line-height:1.04;letter-spacing:-.01em;text-transform:uppercase;color:#F3F1EA">${marca(s, 'color:#FF5A1F')}</${tag}>`;
+
+function capaV4(post) {
+  const c = post.capa;
+  const f = foto(post, c.foto || 1);
+  const px = fit(c.manchete, [[60, 72], [90, 64], [120, 58], [999, 52]]);
+  const ci = c.circulo ? foto(post, c.circulo.foto) : null;
+  const cred = ci ? { credito: [...new Set([f.credito, ci.credito].filter(Boolean))].join(' · ') } : f;
+  return `${head}<div data-slide style="width:${W}px;height:${H}px;position:relative;overflow:hidden;background:#0E0E0C;font-family:Inter,sans-serif">
+<img src="${f.src}" style="position:absolute;inset:0;width:${W}px;height:${H}px;object-fit:cover;object-position:${esc(c.posicao || 'center')}">
+<div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(14,14,12,.45) 0%,rgba(14,14,12,0) 14%,rgba(14,14,12,0) 50%,rgba(14,14,12,.85) 68%,#0E0E0C 82%)"></div>
+<div style="position:absolute;left:${M + 36}px;top:96px">${logoV4()}</div>
+${ci ? `<div style="position:absolute;left:${M}px;top:290px;width:360px;height:360px;border-radius:50%;overflow:hidden;border:6px solid #F3F1EA;box-shadow:0 20px 50px rgba(0,0,0,.35);background:#F3F1EA">
+<img src="${ci.src}" style="width:100%;height:100%;object-fit:${c.circulo.encaixe === 'conter' ? 'contain' : 'cover'};object-position:${esc(c.circulo.posicao || 'center')}"></div>` : ''}
+<div style="position:absolute;left:${M + 36}px;right:${M + 36}px;bottom:118px;display:flex;flex-direction:column;gap:30px" data-capa>
+${editoriaV4(post.editoria)}${manV4(c.manchete, px)}</div>
+${creditoV4(cred)}</div>${foot}`;
+}
+
+function slideV4(post, s) {
+  const f = foto(post, s.foto || 1);
+  const cheia = s.encaixe === 'cheia';
+  const px = fit(s.texto, [[80, 52], [140, 46], [200, 42], [999, 38]]);
+  const blocos = String(s.texto).split(/\n\s*\n/).map((b) => manV4(b, px, 'p')).join('');
+  const AREA = H - 540; // altura reservada para a imagem
+  const img = cheia
+    ? `<img src="${f.src}" style="position:absolute;left:0;top:0;width:${W}px;height:${AREA + 60}px;object-fit:cover;object-position:${esc(s.posicao || 'center')}">
+<div style="position:absolute;left:0;top:0;width:${W}px;height:${AREA + 60}px;background:linear-gradient(180deg,rgba(14,14,12,.55) 0%,rgba(14,14,12,0) 18%,rgba(14,14,12,0) 70%,#0E0E0C 100%)"></div>`
+    : `<div style="position:absolute;left:${M + 60}px;right:${M + 60}px;top:220px;height:${AREA - 250}px;display:flex;align-items:center;justify-content:center">
+<img src="${f.src}" style="max-width:100%;max-height:100%;object-fit:contain;border:4px solid #F3F1EA;box-shadow:0 24px 60px rgba(0,0,0,.5)"></div>`;
+  return `${head}<div data-slide style="width:${W}px;height:${H}px;position:relative;overflow:hidden;background:#0E0E0C;font-family:Inter,sans-serif">
+${img}<div style="position:absolute;left:${M + 36}px;top:96px">${logoV4()}</div>
+<div style="position:absolute;left:${M + 36}px;right:${M + 36}px;top:${AREA + 20}px;bottom:84px;display:flex;flex-direction:column;gap:24px" data-box>
+${editoriaV4(post.editoria)}${blocos}</div>${creditoV4(f)}</div>${foot}`;
+}
+
+function assinaturaV4() {
+  return `${head}<div data-slide style="width:${W}px;height:${H}px;position:relative;overflow:hidden;background:#0E0E0C;color:#F3F1EA;font-family:Inter,sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:56px;text-align:center;padding:0 ${M + 20}px">
+${logoV4(120)}
+<p style="margin:0;${ARCH};font-weight:800;font-size:56px;line-height:1.12;letter-spacing:-.01em">A rodada diária de IA, startups e tecnologia para devs e founders.</p>
+<p style="margin:0;${ARCH};font-weight:800;font-size:44px;color:#FF5A1F">Siga e compartilhe ↗</p></div>${foot}`;
+}
+
 const CAPAS = { foto: capaFoto, pergunta: capaFoto, citacao: capaCitacao, duelo: capaDuelo };
 const MIOLO = { noticia, importa, prova, barras };
 
 function slides(post) {
+  H = dims(post).h;
+  if ((post.versao_modelo || 0) >= 4) {
+    if (!(post.slides || []).length) throw new Error('Post v4 sem "slides".');
+    return [capaV4(post), ...post.slides.map((s) => slideV4(post, s)), assinaturaV4()];
+  }
   const miolo = post.slides || [];
   if (!miolo.length) throw new Error('Post sem "slides" (formato v2).');
   const total = miolo.length + 1;
@@ -246,4 +306,4 @@ function slides(post) {
   return [fazCapa(post), ...miolo.map((s, k) => (MIOLO[s.tipo] || noticia)(post, s, k + 2, total))];
 }
 
-module.exports = { slides, capa, noticia, importa, prova, barras, capaCitacao, capaDuelo };
+module.exports = { dims, slides, capa, noticia, importa, prova, barras, capaCitacao, capaDuelo };

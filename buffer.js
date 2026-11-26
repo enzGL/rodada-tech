@@ -186,10 +186,18 @@ if (require.main === module) {
     } else if (args.includes('--fila')) {
       const ctx = await contexto();
       for (const p of await fila(ctx)) console.log(`${p.dueAt}  ${p.id}  ${String(p.text).split('\n')[0].slice(0, 70)}`);
+    } else if (args.includes('--remover')) {
+      // node buffer.js --remover <buffer_id> [...]: tira da fila (não apaga post já publicado).
+      for (const id of arqs) {
+        const d = await gql(`mutation { deletePost(input: { id: "${id}" }) { __typename ... on MutationError { message } } }`);
+        const r = d.deletePost || {};
+        if (r.message) throw new Error(`Buffer ${id}: ${r.message}`);
+        console.log(`REMOVIDO ${id} (${r.__typename})`);
+      }
     } else if (arqs.length) {
       await agendar(arqs, { teste });
     } else {
-      console.error('Uso: node buffer.js --checar | --fila | <post.json> [...] [--teste]');
+      console.error('Uso: node buffer.js --checar | --fila | --remover <id> [...] | <post.json> [...] [--teste]');
       process.exit(1);
     }
   })().catch((e) => {

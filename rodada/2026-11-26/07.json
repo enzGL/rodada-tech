@@ -54,5 +54,7 @@
     "numero_central_conferido": true,
     "relevancia": 8
   },
-  "versao_modelo": 3
+  "versao_modelo": 3,
+  "status": "descartado",
+  "motivo": "guardado para reuso (2026-11-26), tirado da fila do Buffer"
 }

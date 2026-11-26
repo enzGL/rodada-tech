@@ -4,7 +4,7 @@
 const fs = require('fs');
 const path = require('path');
 const puppeteer = require('puppeteer-core');
-const { slides } = require('./templates');
+const { slides, dims } = require('./templates');
 
 function chromePath() {
   const cands = [
@@ -43,7 +43,8 @@ async function render(jsonPath) {
   });
   try {
     const page = await browser.newPage();
-    await page.setViewport({ width: 1080, height: 1350, deviceScaleFactor: 1 });
+    const { w: LW, h: LH } = dims(post);
+    await page.setViewport({ width: LW, height: LH, deviceScaleFactor: 1 });
     const htmls = slides(post);
     const files = [];
     for (let i = 0; i < htmls.length; i++) {
@@ -51,17 +52,17 @@ async function render(jsonPath) {
       await page.evaluate(() => document.fonts.ready);
       const quebrada = await page.evaluate(() => [...document.images].some((img) => !(img.complete && img.naturalWidth > 0)));
       if (quebrada) throw new Error(`${jsonPath}: foto não carregou no slide ${i + 1}.`);
-      const overflow = await page.evaluate(() => {
+      const overflow = await page.evaluate((LH) => {
         const el = document.querySelector('[data-slide]');
-        if (el.scrollHeight > 1350 || el.scrollWidth > 1080) return true;
+        if (el.scrollHeight > LH || el.scrollWidth > 1080) return true;
         // Blocos de texto: não podem passar da área reservada; a capa não pode subir até o logo.
         if ([...el.querySelectorAll('[data-box]')].some((n) => n.scrollHeight > n.clientHeight + 2)) return true;
         const capa = el.querySelector('[data-capa]');
         return !!capa && capa.getBoundingClientRect().top < 170;
       });
-      if (overflow) console.warn(`AVISO: slide ${i + 1} de ${jsonPath} estourou 1080x1350. Encurte o texto.`);
+      if (overflow) console.warn(`AVISO: slide ${i + 1} de ${jsonPath} estourou o tamanho do slide. Encurte o texto.`);
       const file = path.join(outDir, `${i + 1}.jpg`);
-      await page.screenshot({ path: file, type: 'jpeg', quality: 92, clip: { x: 0, y: 0, width: 1080, height: 1350 } });
+      await page.screenshot({ path: file, type: 'jpeg', quality: 92, clip: { x: 0, y: 0, width: LW, height: LH } });
       files.push(file);
     }
     console.log(files.join('\n'));
@@ -85,4 +86,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { render };
+module.exports = { render, chromePath };

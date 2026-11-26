@@ -59,6 +59,30 @@ async function baixar(url) {
   return { buf, ext };
 }
 
+
+// Print real da página (a "prova"): { print: "<url>", seletor?: "<css do trecho>", altura?: 1100, credito: "Reprodução/<site>" }.
+// Esconde banners de cookie comuns. Nunca montar print falso: só captura da página de verdade.
+async function printPagina(f, destino) {
+  const puppeteer = require("puppeteer-core");
+  const { chromePath } = require("./render");
+  const b = await puppeteer.launch({ executablePath: chromePath(), headless: true, args: ["--no-sandbox", "--disable-dev-shm-usage"] });
+  try {
+    const p = await b.newPage();
+    await p.setUserAgent(UA);
+    await p.setViewport({ width: f.largura || 1000, height: f.altura || 1100, deviceScaleFactor: 2 });
+    await p.goto(f.print, { waitUntil: "networkidle2", timeout: 60000 });
+    await p.addStyleTag({ content: "[id*=cookie i],[class*=cookie i],[id*=consent i],[class*=consent i],[class*=onetrust i],#onetrust-banner-sdk,[aria-modal=true]{display:none!important}" });
+    await new Promise((r) => setTimeout(r, 1500));
+    if (f.seletor) {
+      const el = await p.$(f.seletor);
+      if (!el) throw new Error("seletor não encontrado: " + f.seletor);
+      await el.screenshot({ path: destino, type: "jpeg", quality: 90 });
+    } else {
+      await p.screenshot({ path: destino, type: "jpeg", quality: 90 });
+    }
+  } finally { await b.close(); }
+}
+
 async function fotos(jsonPath) {
   const post = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
   const dir = jsonPath.replace(/\.json$/, '');
@@ -69,6 +93,15 @@ async function fotos(jsonPath) {
   for (let i = 0; i < lista.length; i++) {
     const f = lista[i];
     try {
+      if (f.print) {
+        for (const velho of fs.readdirSync(dir).filter((x) => x.startsWith(`foto-${i + 1}.`))) fs.unlinkSync(path.join(dir, velho));
+        const destino = path.join(dir, `foto-${i + 1}.jpg`);
+        await printPagina(f, destino);
+        f.arquivo = path.relative(path.dirname(jsonPath), destino).replace(/\\/g, '/');
+        ok++;
+        console.log(`OK print ${i + 1}: ${f.print}`);
+        continue;
+      }
       let url = f.url;
       if (!url && f.commons) {
         const c = await commons(f.commons);
