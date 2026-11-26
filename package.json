@@ -1,0 +1,14 @@
+{
+  "name": "rodada-tech",
+  "private": true,
+  "description": "Pipeline da rodada diária do @rodada.tech: render dos slides e publicação no Instagram.",
+  "scripts": {
+    "render": "node render.js",
+    "publicar": "node publish.js",
+    "proximo": "node publish.js --proximo",
+    "checar": "node publish.js --checar"
+  },
+  "dependencies": {
+    "puppeteer-core": "^23.11.1"
+  }
+}

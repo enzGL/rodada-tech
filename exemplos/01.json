@@ -1,0 +1,42 @@
+{
+  "edicao": 1,
+  "data": "2026-11-26",
+  "horario": "06:00",
+  "editoria": "IA · COMPARATIVO",
+  "fonte": "Testes de @charliehills",
+  "fonte_url": "https://exemplo.com/fonte-original",
+  "capa": {
+    "tipo": "texto",
+    "manchete": "Modelo novo sai 36% mais barato, mas trava mais",
+    "subtitulo": "Quatro projetos. Mesmo pedido. Primeira tentativa.",
+    "comparativo": [
+      { "rotulo": "Modelo A", "valor": "US$ 14,33" },
+      { "rotulo": "Modelo B", "valor": "US$ 9,19", "destaque": true }
+    ],
+    "foto_url": "",
+    "credito_foto": ""
+  },
+  "contexto": {
+    "titulo": "Mais barato, mas travou mais vezes",
+    "itens": [
+      { "numero": "4", "texto": "projetos testados com o mesmo pedido." },
+      { "numero": "107", "texto": "peças no relógio feito pelo modelo B, contra 79 do A." },
+      { "numero": "7/12", "texto": "tentativas concluídas pelo B. O A fechou 4 de 4." }
+    ]
+  },
+  "pratica": {
+    "titulo": "Faça a conta no seu próprio projeto",
+    "passos": [
+      "Rode o mesmo pedido nos dois modelos.",
+      "Anote o gasto até ter algo entregável.",
+      "Some o tempo de revisão e as tentativas que travaram."
+    ],
+    "pergunta": "Qual modelo tá no seu dia a dia hoje? Conta nos comentários."
+  },
+  "legenda": "EXEMPLO DE ESTRUTURA, NÃO PUBLICAR.\n\nFato no 1º parágrafo.\n\nContexto.\n\nOlha o detalhe: ...\n\nPra testar: ...\n\nE você? Pergunta pra comunidade.\n\nFonte: Veículo (link na bio não, citar o nome)\nFoto: Divulgação/Empresa\n\n#ia #startups #dev",
+  "checagem": {
+    "verdadeira": "fonte primária: ...",
+    "numero_central_conferido": true,
+    "relevancia": 8
+  }
+}
