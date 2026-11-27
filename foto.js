@@ -70,8 +70,38 @@ async function printPagina(f, destino) {
     const p = await b.newPage();
     await p.setUserAgent(UA);
     await p.setViewport({ width: f.largura || 1000, height: f.altura || 1100, deviceScaleFactor: 2 });
-    await p.goto(f.print, { waitUntil: "networkidle2", timeout: 60000 });
-    await p.addStyleTag({ content: "[id*=cookie i],[class*=cookie i],[id*=consent i],[class*=consent i],[class*=onetrust i],#onetrust-banner-sdk,[aria-modal=true]{display:none!important}" });
+    try {
+      // "espera": "dom" para sites que ficam em branco esperando a rede ociosa.
+      if (f.espera === "dom") throw new Error("timeout forçado (espera: dom)");
+      await p.goto(f.print, { waitUntil: "networkidle2", timeout: 45000 });
+    } catch (e) {
+      // Sites com anúncio infinito nunca ficam ociosos: segue com o DOM carregado.
+      if (!/timeout/i.test(e.message)) throw e;
+      await p.goto(f.print, { waitUntil: "domcontentloaded", timeout: 45000 });
+      await new Promise((r) => setTimeout(r, 4000));
+    }
+    // Aceita o banner de cookies quando houver botão claro (tira também o véu escuro da página).
+    const aceitar = () => p.evaluate(() => {
+      const re = /^\s*(accept( all)?|i accept|agree|i agree|aceitar( todos)?|aceito|concordo|ok|got it|entendi)\s*$/i;
+      for (const b of document.querySelectorAll("button, a, [role=button]")) {
+        if (re.test(b.innerText || "")) { b.click(); return true; }
+      }
+      return false;
+    }).catch(() => false);
+    // O banner às vezes aparece segundos depois: tenta de novo.
+    if (!(await aceitar())) { await new Promise((r) => setTimeout(r, 2500)); await aceitar(); }
+    await new Promise((r) => setTimeout(r, 1200));
+    // "sem_filtro_cookie": true quando o filtro abaixo esconde a página inteira (wrapper com "consent" na classe).
+    if (!f.sem_filtro_cookie) await p.addStyleTag({ content: "[id*=cookie i],[class*=cookie i],[id*=consent i],[class*=consent i],[class*=onetrust i],#onetrust-banner-sdk,[aria-modal=true]{display:none!important}" });
+    // Opcional: "esconder": ["css", ...] para tirar anúncios ou blocos que tampam a matéria (nunca o texto da notícia).
+    const esconder = [...(f.esconder || []), ...(f.sem_anuncio ? ["iframe", "[id^=google_ads]", "[class*=advert i]", "[id*=advert i]", "[class*=ad-container i]", "[class*=ad-slot i]", "ins.adsbygoogle"] : [])];
+    if (esconder.length) await p.addStyleTag({ content: esconder.join(",") + "{display:none!important}" });
+    if (f.rolar) await p.evaluate((y) => window.scrollTo(0, y), f.rolar);
+    // "rolar_ate": "<trecho do texto>" leva o parágrafo que contém o trecho para o alto do print.
+    if (f.rolar_ate) await p.evaluate((t) => {
+      const el = [...document.querySelectorAll("p, h1, h2, li")].find((x) => (x.innerText || "").includes(t));
+      if (el) window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY - 120);
+    }, f.rolar_ate);
     await new Promise((r) => setTimeout(r, 1500));
     if (f.seletor) {
       const el = await p.$(f.seletor);

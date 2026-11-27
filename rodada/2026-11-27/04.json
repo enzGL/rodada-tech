@@ -1,0 +1,58 @@
+{
+  "edicao": 4,
+  "data": "2026-11-27",
+  "horario": "20:30",
+  "versao_modelo": 4,
+  "formato": "3:4",
+  "editoria": "Mercado de trabalho",
+  "fonte": "Anthropic",
+  "fonte_url": "https://www.anthropic.com/research/working-with-ai",
+  "fotos": [
+    {
+      "commons": "File:Dario Amodei in 2023.jpg",
+      "credito": "UK Prime Minister/Wikimedia Commons (CC BY 2.0)",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Dario_Amodei_in_2023.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "arquivo": "04/foto-1.jpg"
+    },
+    {
+      "print": "https://www.anthropic.com/research/working-with-ai",
+      "credito": "Reprodução/Anthropic",
+      "largura": 900,
+      "altura": 1000,
+      "arquivo": "04/foto-2.jpg"
+    }
+  ],
+  "capa": {
+    "manchete": "Anthropic ouviu 58 empresas que usam IA: quase ninguém demitiu, mas *2 em cada 3 estão contratando menos*",
+    "foto": 1,
+    "posicao": "center 30%"
+  },
+  "slides": [
+    {
+      "foto": 2,
+      "encaixe": "moldura",
+      "texto": "Foram 66 entrevistas em 58 empresas americanas clientes da Anthropic. Demissões causadas pela IA foram *raras*."
+    },
+    {
+      "foto": 2,
+      "encaixe": "moldura",
+      "texto": "*\"Podemos não estar demitindo, mas não estamos contratando\"*, resumiu um entrevistado.\n\nSó 10 empresas disseram contratar mais por causa da IA."
+    },
+    {
+      "foto": 1,
+      "encaixe": "cheia",
+      "posicao": "center 30%",
+      "texto": "Muitas cortaram *terceirizados*, principalmente no exterior. Uma financeira dispensou bem mais de 100 prestadores de dados e desenvolvimento."
+    }
+  ],
+  "legenda": "Anthropic ouviu 58 empresas: quase ninguém demitiu por IA, mas 2 em cada 3 contratam menos\n\nA Anthropic publicou em 23/11 o estudo \"Working with AI\", com 66 entrevistas em 58 empresas americanas que usam o Claude. A conclusão: demissões causadas pela automação foram raras, mas pessoas de dois terços das empresas disseram que a IA reduziu as contratações. \"Podemos não estar demitindo, mas não estamos contratando\", resumiu um entrevistado.\n\nDez empresas disseram contratar mais por causa da IA, principalmente para implantar a tecnologia e reforçar o suporte de TI. Muitas também reduziram terceirizados, sobretudo os do exterior: uma empresa financeira dispensou bem mais de 100 prestadores de dados e de desenvolvimento.\n\nOlha o detalhe: a própria Anthropic avisa que a amostra foi escolhida pela variedade, não é aleatória e não serve para medir o efeito na economia inteira.\n\nPra quem constrói: o impacto aparece primeiro na vaga que não abre e no contrato terceirizado que não renova. Para quem presta serviço de dev ou de dados, vender só hora de trabalho fica mais difícil.\n\nNa sua empresa a IA já mudou as contratações? Comenta aí.\n\nSiga @rodada.tech para a rodada diária de IA, startups e tecnologia.\n\nFonte: Anthropic, \"Working with AI\" (23/11/2026)\nFoto: UK Prime Minister/Wikimedia Commons (CC BY 2.0); print: Reprodução/Anthropic\n\n#ia #inteligenciaartificial #mercadodetrabalho #emprego #anthropic #claude #carreira #tecnologia #startups #dev #empreendedorismo",
+  "checagem": {
+    "verdadeira": "Fonte primária: https://www.anthropic.com/research/working-with-ai (23/11/2026): 66 entrevistas em 58 empresas dos EUA; poucas demissões por automação; dois terços relataram menos contratações; 10 contratando mais; redução de terceirizados, uma financeira cortou bem mais de 100 prestadores offshore; amostra não representativa. Confirmado por thestateofai.com e madrobot.blog.",
+    "numero_central_conferido": true,
+    "relevancia": 8
+  },
+  "reel": {
+    "horario": "21:30",
+    "trial": true
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "edicao": 3,
+  "data": "2026-11-27",
+  "horario": "16:30",
+  "versao_modelo": 4,
+  "formato": "3:4",
+  "editoria": "Big tech",
+  "fonte": "Financial Times, via The National e Reuters; Nextgov",
+  "fonte_url": "https://www.thenationalnews.com/future/technology/2026/11/26/nvidia-halts-chip-shipments-to-south-east-asia-amid-us-crackdown/",
+  "fotos": [
+    {
+      "commons": "File:NVIDIA Headquarters.jpg",
+      "credito": "Coolcaesar/Wikimedia Commons (CC BY-SA 4.0)",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0f/NVIDIA_Headquarters.jpg/1920px-NVIDIA_Headquarters.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "arquivo": "03/foto-1.jpg"
+    },
+    {
+      "print": "https://www.thenationalnews.com/future/technology/2026/11/26/nvidia-halts-chip-shipments-to-south-east-asia-amid-us-crackdown/",
+      "credito": "Reprodução/The National",
+      "largura": 560,
+      "altura": 640,
+      "arquivo": "03/foto-2.jpg",
+      "sem_anuncio": true,
+      "espera": "dom",
+      "sem_filtro_cookie": true
+    },
+    {
+      "print": "https://www.nextgov.com/artificial-intelligence/2026/11/commerce-department-moves-close-ai-chip-loophole/417255/",
+      "credito": "Reprodução/Nextgov",
+      "largura": 480,
+      "altura": 560,
+      "arquivo": "03/foto-3.jpg",
+      "sem_anuncio": true,
+      "espera": "dom",
+      "esconder": [
+        ".js-interstitial"
+      ],
+      "rolar_ate": "The new rule, issued by Commerce"
+    }
+  ],
+  "capa": {
+    "manchete": "Nvidia trava servidores de IA para 4 países da Ásia, e a nova regra dos EUA *também inclui o Brasil*",
+    "foto": 1,
+    "posicao": "center 50%"
+  },
+  "slides": [
+    {
+      "foto": 2,
+      "encaixe": "moldura",
+      "texto": "Dell e Supermicro avisaram clientes na Malásia, Singapura, Tailândia e Indonésia que a Nvidia *não vai autorizar os pedidos*, segundo o Financial Times."
+    },
+    {
+      "foto": 3,
+      "encaixe": "moldura",
+      "texto": "A pausa vem de uma regra do Departamento de Comércio dos EUA: chips avançados de IA para esses quatro países *e para o Brasil* agora exigem licença."
+    },
+    {
+      "foto": 1,
+      "encaixe": "cheia",
+      "posicao": "center 50%",
+      "texto": "O objetivo é fechar a brecha de empresas chinesas que usam data centers de outros países.\n\nQuem já atende clientes chineses tem *90 dias* para pedir licença."
+    }
+  ],
+  "legenda": "Nvidia trava servidores de IA para 4 países da Ásia, e a regra dos EUA também inclui o Brasil\n\nA Nvidia pediu aos fabricantes parceiros que parem de enviar servidores com seus chips de IA para Malásia, Singapura, Tailândia e Indonésia, segundo o Financial Times. Dell e Supermicro já avisaram clientes desses países que os pedidos não serão autorizados. Não há data para a pausa acabar.\n\nO motivo é uma regra provisória do Departamento de Comércio dos EUA, publicada em 16/11, que passa a exigir licença para exportar chips avançados de IA para Indonésia, Malásia, Singapura, Tailândia e Brasil. A ideia é fechar a brecha usada por empresas chinesas para acessar esse poder de computação por meio de data centers em outros países. Quem já atende grandes clientes chineses tem 90 dias para pedir licença.\n\nOlha o detalhe: o Brasil está na lista da regra, mas a pausa de envios relatada pelo FT cita só os quatro países asiáticos. As licenças serão analisadas caso a caso.\n\nPra quem constrói: projeto de data center ou de IA que depende de GPU importada no Brasil agora precisa colocar licença e prazo de entrega no plano.\n\nIsso pode atrasar os data centers de IA no Brasil? Comenta aí.\n\nSiga @rodada.tech para a rodada diária de IA, startups e tecnologia.\n\nFonte: Financial Times, via The National e Reuters (26/11/2026); Nextgov (16/11/2026)\nFoto: Coolcaesar/Wikimedia Commons (CC BY-SA 4.0); prints: Reprodução/The National e Nextgov\n\n#nvidia #ia #inteligenciaartificial #chips #datacenter #tecnologia #bigtech #brasil #eua #china #startups",
+  "checagem": {
+    "verdadeira": "The National 26/11/2026 (https://www.thenationalnews.com/future/technology/2026/11/26/nvidia-halts-chip-shipments-to-south-east-asia-amid-us-crackdown/) citando o FT: Nvidia pede a parceiros que parem envios para Malásia, Singapura, Tailândia e Indonésia; Dell e Supermicro avisaram clientes. Reuters via US News e Quartz confirmam, sem data para acabar. Nextgov (https://www.nextgov.com/artificial-intelligence/2026/11/commerce-department-moves-close-ai-chip-loophole/417255/): regra do BIS exige licença para Indonésia, Malásia, Singapura, Tailândia e Brasil; 90 dias para data centers que atendem empresas chinesas. Detalhe do escândalo envolvendo Jensen Huang omitido (fonte única).",
+    "numero_central_conferido": true,
+    "relevancia": 8
+  },
+  "reel": {
+    "horario": "18:00",
+    "trial": true
+  }
+}

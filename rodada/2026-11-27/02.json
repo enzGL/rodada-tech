@@ -1,0 +1,58 @@
+{
+  "edicao": 2,
+  "data": "2026-11-27",
+  "horario": "14:00",
+  "versao_modelo": 4,
+  "formato": "3:4",
+  "editoria": "Inteligência artificial",
+  "fonte": "Anthropic",
+  "fonte_url": "https://www.anthropic.com/research/migrating-api-to-rust",
+  "fotos": [
+    {
+      "commons": "File:Dario Amodei at TechCrunch Disrupt 2023 01.jpg",
+      "credito": "TechCrunch/Wikimedia Commons (CC BY 2.0)",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/da/Dario_Amodei_at_TechCrunch_Disrupt_2023_01.jpg/1920px-Dario_Amodei_at_TechCrunch_Disrupt_2023_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "arquivo": "02/foto-1.jpg"
+    },
+    {
+      "print": "https://www.anthropic.com/research/migrating-api-to-rust",
+      "credito": "Reprodução/Anthropic",
+      "largura": 900,
+      "altura": 1000,
+      "arquivo": "02/foto-2.jpg"
+    }
+  ],
+  "capa": {
+    "manchete": "Anthropic usou o Claude para reescrever a própria API em Rust e cortou *70% do uso de CPU*",
+    "foto": 1,
+    "posicao": "center 25%"
+  },
+  "slides": [
+    {
+      "foto": 2,
+      "encaixe": "moldura",
+      "texto": "A API que atende todas as conversas do Claude saiu do Python para o Rust. O primeiro rascunho do núcleo foi escrito pelo Claude *em cerca de uma semana*."
+    },
+    {
+      "foto": 1,
+      "encaixe": "cheia",
+      "posicao": "center 25%",
+      "texto": "Deixar o código pronto para milhões de pedidos levou *meses* de testes.\n\nO tráfego público mudou para Rust em setembro, sem tirar o serviço do ar."
+    },
+    {
+      "foto": 2,
+      "encaixe": "moldura",
+      "texto": "Resultado: cerca de 70% menos CPU por pedido e *20% mais rapidez* na primeira resposta, segundo a empresa."
+    }
+  ],
+  "legenda": "Anthropic usou o Claude para reescrever a própria API em Rust\n\nA Anthropic migrou a Messages API, o serviço que recebe todas as conversas com o Claude, de Python para Rust. Segundo o relato publicado pela empresa em 25/11, a versão em Rust usa cerca de 70% menos CPU por pedido e reduz em cerca de 20% o tempo mediano até a primeira resposta.\n\nO Claude escreveu a primeira versão do núcleo da API em cerca de uma semana. Deixar esse código pronto para milhões de pedidos reais levou meses, com testes comparando o tráfego do Python e do Rust lado a lado. O tráfego público foi migrado em setembro de 2026, sem tirar o serviço do ar.\n\nOlha o detalhe: a própria Anthropic diz que, em maio de 2026, o Claude já escrevia mais de 80% do código que a empresa colocava em produção. Os 70% de CPU foram medidos em uma região; a queda de memória, de mais de 80%, vale para toda a produção.\n\nPra quem constrói: a IA escreve rápido, mas a parte cara continua sendo provar que o código novo faz exatamente o que o antigo fazia. Sem bateria de testes, a reescrita vira aposta.\n\nVocê reescreveria um sistema em produção com ajuda de IA? Comenta aí.\n\nSiga @rodada.tech para a rodada diária de IA, startups e tecnologia.\n\nFonte: Anthropic, \"Migrating our Messages API to Rust\" (25/11/2026)\nFoto: TechCrunch/Wikimedia Commons (CC BY 2.0); print: Reprodução/Anthropic\n\n#ia #inteligenciaartificial #rust #python #programacao #dev #anthropic #claude #engenhariadesoftware #tecnologia #startups",
+  "checagem": {
+    "verdadeira": "Fonte primária: https://www.anthropic.com/research/migrating-api-to-rust (25/11/2026): ~70% menos CPU por pedido, ~20% menos tempo mediano até o primeiro token, primeira versão do núcleo em ~1 semana, tráfego público em Rust em setembro de 2026, Claude escrevendo mais de 80% do código mesclado em maio de 2026. Confirmado por TechRepublic e The Next Web.",
+    "numero_central_conferido": true,
+    "relevancia": 8
+  },
+  "reel": {
+    "horario": "15:30",
+    "trial": true
+  }
+}
