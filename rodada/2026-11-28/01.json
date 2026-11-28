@@ -1,0 +1,67 @@
+{
+  "edicao": 1,
+  "data": "2026-11-28",
+  "horario": "12:00",
+  "versao_modelo": 4,
+  "formato": "3:4",
+  "editoria": "Fintech e cripto",
+  "fonte": "Brazil Journal",
+  "fonte_url": "https://braziljournal.com/b3-e-grandes-bancos-entram-na-blockchain-com-a-stablecoin-open-brl",
+  "fotos": [
+    {
+      "commons": "File:São Paulo Stock Exchange Building.jpg",
+      "credito": "Rockmysock at English Wikipedia/Wikimedia Commons (Public domain)",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/8/8a/S%C3%A3o_Paulo_Stock_Exchange_Building.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "arquivo": "01/foto-1.jpg"
+    },
+    {
+      "print": "https://braziljournal.com/b3-e-grandes-bancos-entram-na-blockchain-com-a-stablecoin-open-brl",
+      "credito": "Reprodução/Brazil Journal",
+      "largura": 900,
+      "altura": 1000,
+      "arquivo": "01/foto-2.jpg",
+      "rolar_ate": "anunciaram hoje a criação"
+    },
+    {
+      "print": "https://braziljournal.com/b3-e-grandes-bancos-entram-na-blockchain-com-a-stablecoin-open-brl",
+      "credito": "Reprodução/Brazil Journal",
+      "largura": 900,
+      "altura": 1000,
+      "rolar_ate": "A B3 tem no pipeline",
+      "arquivo": "01/foto-3.jpg"
+    }
+  ],
+  "capa": {
+    "manchete": "B3 e seis grandes bancos anunciam a Open BRL, uma stablecoin do real para *entrar em operação em 2027*",
+    "foto": 1,
+    "posicao": "center 30%"
+  },
+  "slides": [
+    {
+      "foto": 2,
+      "encaixe": "moldura",
+      "texto": "Bradesco, BTG, Itaú, Safra, Santander e XP vão desenvolver a moeda com a B3. A previsão é de *operação no 1º trimestre de 2027*."
+    },
+    {
+      "foto": 1,
+      "encaixe": "cheia",
+      "posicao": "center 30%",
+      "texto": "A B3 cuida da tecnologia. O Banco B3 emite a moeda e guarda reservas em títulos públicos e dinheiro para a conversão *1 para 1*."
+    },
+    {
+      "foto": 3,
+      "encaixe": "moldura",
+      "texto": "O anúncio vem com o Banco Central adiando o Drex. A B3 também planeja *ações tokenizadas* no 2º semestre de 2027."
+    }
+  ],
+  "legenda": "B3 e seis grandes bancos anunciam a Open BRL, stablecoin atrelada ao real\n\nA B3 e seis dos maiores bancos do país anunciaram a criação da Open BRL, uma stablecoin atrelada ao real que vai funcionar numa infraestrutura compartilhada. Participam Bradesco, BTG, Itaú, Safra, Santander e XP. A previsão é de que entre em operação no primeiro trimestre de 2027.\n\nNa divisão de tarefas, a B3 fica com a base tecnológica. O Banco B3 emite a moeda e mantém reservas em títulos públicos e dinheiro para lastrear a conversibilidade de 1 para 1. Os demais bancos cuidam da integração dos sistemas.\n\nOlha o detalhe: o anúncio vem com o Banco Central adiando o Drex, o projeto da própria moeda digital. Hoje as principais stablecoins em reais são de startups, como a BRLA (Avenia) e a BRL1 (consórcio de Cainvest, Bitso, Foxbit e Mercado Bitcoin). A B3 também planeja lançar ações tokenizadas, com negociação ininterrupta e liquidação instantânea, no segundo semestre de 2027.\n\nPra quem constrói: com os grandes bancos na mesma rede, aplicações com liquidação 24 horas e contratos inteligentes em reais passam a ter uma base que as startups não conseguiam sozinhas. Quem faz pagamentos e cripto no Brasil vai ter que decidir se integra ou compete.\n\nVocê usaria uma stablecoin emitida por banco? Comenta aí.\n\nSiga @rodada.tech para a rodada diária de IA, startups e tecnologia.\n\nFonte: Brazil Journal (27/11/2026)\nFoto: Reprodução/Brazil Journal; prints: Reprodução/Brazil Journal\n\n#startups #fintech #stablecoin #b3 #cripto #blockchain #openbrl #drex #tokenizacao #bancos #tecnologia",
+  "checagem": {
+    "verdadeira": "Brazil Journal 27/11/2026 (https://braziljournal.com/b3-e-grandes-bancos-entram-na-blockchain-com-a-stablecoin-open-brl): B3 e Bradesco, BTG, Itaú, Safra, Santander e XP, 1T27, Banco B3 emite e guarda reservas 1:1, ações tokenizadas no 2S27, Drex adiado. Confirmado por Diário Carioca (https://www.diariocarioca.com/2026/11/27/economia/open-brl-stablecoin-banco-b3/), LetsMoney, SpaceMoney, Cryptotimes e Cryptopolitan (27/11/2026).",
+    "numero_central_conferido": true,
+    "relevancia": 8
+  },
+  "reel": {
+    "horario": "19:00",
+    "trial": true
+  }
+}
